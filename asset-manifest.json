@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.306904db.chunk.css",
-    "main.js": "/static/js/main.379bca89.chunk.js",
-    "main.js.map": "/static/js/main.379bca89.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.33d76bca.js",
-    "runtime-main.js.map": "/static/js/runtime-main.33d76bca.js.map",
-    "static/js/2.23979763.chunk.js": "/static/js/2.23979763.chunk.js",
-    "static/js/2.23979763.chunk.js.map": "/static/js/2.23979763.chunk.js.map",
-    "static/js/3.485dbdd0.chunk.js": "/static/js/3.485dbdd0.chunk.js",
-    "static/js/3.485dbdd0.chunk.js.map": "/static/js/3.485dbdd0.chunk.js.map",
-    "static/js/4.e88af87a.chunk.js": "/static/js/4.e88af87a.chunk.js",
-    "static/js/4.e88af87a.chunk.js.map": "/static/js/4.e88af87a.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.306904db.chunk.css.map": "/static/css/main.306904db.chunk.css.map",
-    "static/js/2.23979763.chunk.js.LICENSE.txt": "/static/js/2.23979763.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/static/media/fa-solid-900.c4054b9e.svg"
+    "main.css": "/isecronic/static/css/main.b0eb3a9e.chunk.css",
+    "main.js": "/isecronic/static/js/main.379bca89.chunk.js",
+    "main.js.map": "/isecronic/static/js/main.379bca89.chunk.js.map",
+    "runtime-main.js": "/isecronic/static/js/runtime-main.95347344.js",
+    "runtime-main.js.map": "/isecronic/static/js/runtime-main.95347344.js.map",
+    "static/js/2.23979763.chunk.js": "/isecronic/static/js/2.23979763.chunk.js",
+    "static/js/2.23979763.chunk.js.map": "/isecronic/static/js/2.23979763.chunk.js.map",
+    "static/js/3.485dbdd0.chunk.js": "/isecronic/static/js/3.485dbdd0.chunk.js",
+    "static/js/3.485dbdd0.chunk.js.map": "/isecronic/static/js/3.485dbdd0.chunk.js.map",
+    "static/js/4.e88af87a.chunk.js": "/isecronic/static/js/4.e88af87a.chunk.js",
+    "static/js/4.e88af87a.chunk.js.map": "/isecronic/static/js/4.e88af87a.chunk.js.map",
+    "index.html": "/isecronic/index.html",
+    "static/css/main.b0eb3a9e.chunk.css.map": "/isecronic/static/css/main.b0eb3a9e.chunk.css.map",
+    "static/js/2.23979763.chunk.js.LICENSE.txt": "/isecronic/static/js/2.23979763.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/isecronic/static/media/fa-solid-900.c4054b9e.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.33d76bca.js",
+    "static/js/runtime-main.95347344.js",
     "static/js/2.23979763.chunk.js",
-    "static/css/main.306904db.chunk.css",
+    "static/css/main.b0eb3a9e.chunk.css",
     "static/js/main.379bca89.chunk.js"
   ]
 }
