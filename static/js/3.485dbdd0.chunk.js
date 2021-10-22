@@ -1,0 +1,2 @@
+(this.webpackJsonpisecronic=this.webpackJsonpisecronic||[]).push([[3],{60:function(c,i,e){"use strict";e.r(i),e.d(i,"default",(function(){return s}));e(0);var n=e(1);function s(){return Object(n.jsxs)("div",{children:[Object(n.jsx)("div",{children:"Hello"}),Object(n.jsx)("div",{})]})}}}]);
+//# sourceMappingURL=3.485dbdd0.chunk.js.map
