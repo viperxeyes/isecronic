@@ -5,10 +5,10 @@ import Login from "./Pages/Login/Login";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route exact path="/login" name="Login" component={Login} />
-        <Route path="/" name="Home" component={AppContainer} />
+        <Route exact path="/" name="Home" component={AppContainer} />
       </Switch>
     </BrowserRouter>
   );
