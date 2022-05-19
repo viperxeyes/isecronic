@@ -1,15 +1,14 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AppContainer from "./components/layout/AppContainer";
-import Login from "./Pages/Login/Login";
+// import Login from "./Pages/Login/Login";
 
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/login" name="Login" component={Login} />
-        <Route exact path="/" name="Home" component={AppContainer} />
-      </Switch>
+      <Routes>
+        <Route path="*" element={<AppContainer />} />
+      </Routes>
     </BrowserRouter>
   );
 }

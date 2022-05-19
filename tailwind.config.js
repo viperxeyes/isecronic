@@ -1,27 +1,16 @@
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: "class", // or 'media' or 'class'
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        gray: {
-          900: "#1e2124",
-          850: "#282b30",
-          800: "#2f3136",
-          700: "#36393f",
-          600: "#424549",
-        },
+        primary: "#25bdf9",
+        secondary: "#1e293b",
+        sidebarHeader: "#2b3445",
+        sidebar: "#374151",
+        header: "#1f2937",
+        main: "#2b3445",
       },
     },
   },
-  variants: {
-    extend: {
-      borderRadius: ["hover", "group-focus"],
-      borderColor: ["group-focus"],
-      scale: ["group-hover", "group-focus"],
-      height: ["group-focus", "group-hover"],
-    },
-    scrollbar: ["rounded"],
-  },
-  plugins: [require("tailwind-scrollbar")],
+  plugins: [],
 };
