@@ -49,8 +49,29 @@ export default function Dashboard() {
       client = mqtt.connect({
         clientId: "React App",
         port: 9001,
-        hostname: "kuast-backend.giize.com",
+        hostname: "kaust-backend.giize.com",
         reconnectPeriod: 5000,
+
+        protocol: "wss",
+        ca: `-----BEGIN CERTIFICATE-----
+      MIIDJTCCAg2gAwIBAgIUPm4R458kYHEN5mEgpaHIMCTQJUkwDQYJKoZIhvcNAQEL
+      BQAwIjEgMB4GA1UEAwwXa2F1c3QtYmFja2VuZC5naWl6ZS5jb20wHhcNMjIwNTE5
+      MDcyNTI2WhcNMjIwNjE4MDcyNTI2WjAiMSAwHgYDVQQDDBdrYXVzdC1iYWNrZW5k
+      LmdpaXplLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOwTldm+
+      gAFVtA2YlEXQzIcq7QfMzzKFOgAkif2X1dRCLoXnsBWtjNfsdpdnPyM7VeHgUaMt
+      yARzGC+uqdimreIfXZn3bs2vH4JdQbaX97D+zQMLx+4gnttgg2MDB5qb5tkvm6YX
+      uDDTJ9+xyzhIPEJ8DVa0Cf6B5WVLcPx9vPf/rwO/nW2qrtqtT3AAV5yo09TFkRlu
+      5PSwM+VvGq98F5LztNHFPNQAlwLCzOpwRC0VNL5m3aaLu+Sz/Yqos2up0aLwDR/y
+      JXowo9MZIz+ULcCZxfJVwFhx6L8AlYH0i0N9lv7xvuY4wrlpocUjPoqyNCQM/bcK
+      89xLr3Ht0vjXmDMCAwEAAaNTMFEwHQYDVR0OBBYEFKdVDFOtXiiNQe9bgYTcQABP
+      bQOUMB8GA1UdIwQYMBaAFKdVDFOtXiiNQe9bgYTcQABPbQOUMA8GA1UdEwEB/wQF
+      MAMBAf8wDQYJKoZIhvcNAQELBQADggEBAJCMwae6Dcp8HmGam2HSQ4iheua1+nr9
+      B9/Byh4x9o4hWqz0R4s6FmlMfPVU24ZJkBTclLL2rVwsulQFelC+ZQYcbeUbNC9R
+      7JocvsV98xWQmY4tWEIyaGxLwz6VkimdlCOyfG/ZJbGMDftwXitD9I3lud+pWPXQ
+      UiwF4rIFRFj4T17k93pdyxiUVKlJ1YQ9N6qQr8+ERiQPuAejsX697tD00XxdU9is
+      9yzK7arGcCYV15CNYywa8G6kqRHMTTSm6+b+htIZ3RSVWaWo5aGltStRY8jKkEmS
+      yHgUOrs7RhFElpyhKLu/Ve81RGWajM9Bdvb6n6oahxmV6YsVxT+PodM=
+      -----END CERTIFICATE-----`,
       });
       client.on("connect", () => {
         setConnectionStatus("online");
