@@ -53,7 +53,7 @@ export default function Dashboard() {
 
         hostname: "kaust-backend.giize.com",
         port: 9883,
-        protocol: "ws",
+        protocol: "wss",
 
         clientId: "React App",
       });
