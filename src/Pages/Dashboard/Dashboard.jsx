@@ -50,31 +50,15 @@ export default function Dashboard() {
         clientId: "React App",
 
         reconnectPeriod: 5000,
-        ca: `-----BEGIN CERTIFICATE-----
-        MIIDOTCCAiGgAwIBAgIUOElu7DMaGbyxgGk/qMhf26Fx4BgwDQYJKoZIhvcNAQEL
-        BQAwLDELMAkGA1UEBhMCRU4xHTAbBgNVBAMMFGlzZWNyb25pYy52ZXJjZWwuYXBw
-        MB4XDTIyMDUyMDAyMjEzMVoXDTIzMDUyMDAyMjEzMVowLDELMAkGA1UEBhMCRU4x
-        HTAbBgNVBAMMFGlzZWNyb25pYy52ZXJjZWwuYXBwMIIBIjANBgkqhkiG9w0BAQEF
-        AAOCAQ8AMIIBCgKCAQEA0X3S5Y0T8sD7MPTJV2HR6ywS5PZqz55iGhBmzAyhSyrn
-        T1xHFVt4z8ecOCpKSOUjg3fz7zfrNVmDhR7xB/7CK+ku7ePnARkQ8IXJ3QZnH+dz
-        WplJp1bNYmme0eHhVlBXFHCzyA02pQOVexyqviJByKSCkEOp+c2vsuit8H15niSY
-        aXmvYGM3Er4sWxuODqfZ8EZgxATEk5VrQFJEz5Yy3U9tO2ct7BiktHQ3cQB9ZfhH
-        WLQ93YD++nUHqw+rW0EU3arW48xIQ9oeyJGS+JUHgrcbiIb6p9PxFgDAXI6dNNib
-        IHWo1IENnlRhFeDNF1t+qxGCsU2IAk7vRxY1YLmRgQIDAQABo1MwUTAdBgNVHQ4E
-        FgQUHRRu0opoJ5JPvd008yBy5VxmzkEwHwYDVR0jBBgwFoAUHRRu0opoJ5JPvd00
-        8yBy5VxmzkEwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAutu3
-        L5akLVRmOuSBFJCk25DqKnJEHgnwLe55PShDXKZLPPnTwCKfeH4oKvfU8fzZqtX+
-        V/XqWcx9+NW8x7SHg87JscEYVwMBOvK2GxJQRu4ULx3zNvCk0OfxccvbDKfAiu4v
-        TrNr25OpR7vwJUNFi49WRIO3gynX6Gqp/o7Ypv03bD2AY12jnRJdk6AZvTK+KImT
-        BkZ3MAVw6xlUbSq3YTTd1enAhl4aj3nW0OE4hnqnBZWPXDcH1iNj3qXSMpYQr1zM
-        Fx1NTnYq5K1D+2xAcX1GdZaxv3a2cEvjn4ksMgcom53A/qiOoDxTlFO43Gm6ijW7
-        gpWmCp7S+JsItYZZKg==
-        -----END CERTIFICATE-----`,
 
-        protocol: "wss",
-        port: 9883,
-
-        hostname: "kaust-backend.giize.com",
+        servers: [
+          {
+            host: "test.mosquitto.org",
+            port: 8081,
+            protocol: "wss",
+            clientId: "React App",
+          },
+        ],
       });
       client.on("connect", () => {
         setConnectionStatus("online");
