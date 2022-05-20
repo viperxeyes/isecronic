@@ -53,7 +53,7 @@ export default function Dashboard() {
 
         servers: [
           {
-            host: "test.mosquitto.org",
+            host: "kaust-backend.giize.com",
             port: 8081,
             protocol: "wss",
             clientId: "React App",
