@@ -51,14 +51,11 @@ export default function Dashboard() {
 
         reconnectPeriod: 5000,
 
-        servers: [
-          {
-            host: "kaust-backend.giize.com",
-            port: 8081,
-            protocol: "wss",
-            clientId: "React App",
-          },
-        ],
+        hostname: "kaust-backend.giize.com",
+        port: 9883,
+        protocol: "ws",
+
+        clientId: "React App",
       });
       client.on("connect", () => {
         setConnectionStatus("online");
