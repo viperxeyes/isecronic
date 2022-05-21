@@ -19,14 +19,14 @@ const AccountButton = () => {
     "#9e9e9e",
     "#607d8b",
   ];
-  const generateRandomColor = () => {
-    let letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
+  //   const generateRandomColor = () => {
+  //     let letters = "0123456789ABCDEF";
+  //     let color = "#";
+  //     for (let i = 0; i < 6; i++) {
+  //       color += letters[Math.floor(Math.random() * 16)];
+  //     }
+  //     return color;
+  //   };
 
   let svg = createAvatar(style, {
     seed: "Dia Eldin",
@@ -41,7 +41,7 @@ const AccountButton = () => {
   return (
     <button className="flex justify-between items-center w-full  h-full border-r-2 border-transparent  hover:opacity-70 transition-all duration-300 ease-out">
       <div className="flex items-center justify-center">
-        <img src={svg} className=" w-12 h-12 rounded-full" />
+        <img src={svg} className=" w-12 h-12 rounded-full" alt="account icon" />
         <div className="ml-4">Dia Eldin</div>
       </div>
 

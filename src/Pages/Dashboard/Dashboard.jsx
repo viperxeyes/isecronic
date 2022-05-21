@@ -7,9 +7,9 @@ import HumidityCard from "components/HumidityCard";
 import ConnectionCard from "components/ConnectionCard";
 import ComfortCard from "components/ComfortCard";
 
-export default function Dashboard() {
+export default function DashboardCopy2() {
   // const [messages, setMessages] = useState([]);
-  const [connectionStatus, setConnectionStatus] = useState();
+
   const [controllerStatus, setControllerStatus] = useState();
   const [gasValue, setGasValue] = useState(0);
   const [gasDetected, setGasDetected] = useState(false);
@@ -28,10 +28,8 @@ export default function Dashboard() {
           : process.env.REACT_APP_DEVELOPMENT_ADDRESS,
       port: 9883,
       protocol: "wss",
-      keepalive: 10,
     });
     client.on("connect", () => {
-      setConnectionStatus("online");
       client.subscribe("dia-room/controller/status");
       client.subscribe("dia-room/gas/value");
       client.subscribe("dia-room/gas/status");

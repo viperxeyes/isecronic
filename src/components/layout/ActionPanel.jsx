@@ -1,6 +1,6 @@
 import React from "react";
-import { FaSearch, FaRegBell } from "react-icons/fa";
-import { AiOutlineBell, AiOutlineSetting } from "react-icons/ai";
+import { FaRegBell } from "react-icons/fa";
+import { AiOutlineSetting } from "react-icons/ai";
 import AccountButton from "./AccountButton";
 export default function ActionPanel() {
   return (

@@ -11,8 +11,9 @@ const GasCard = ({ gasValue, gasDetected }) => {
       className={`flex items-center justify-between bg-slate-800 w-fit  px-5 py-2 rounded-lg space-x-2 shadow-lg`}
     >
       <img
+        alt={"gas icon"}
         src="assets/images/poison.png"
-        className={`w-[32px] h-[32px] ${gasDetected && "animate-bounce"}`}
+        className={`w-[32px] h-[32px] ${gasDetected && "animate-bounce"} `}
       />
       <div className="flex flex-col">
         <span

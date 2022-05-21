@@ -4,6 +4,7 @@ const TemperatureCard = ({ temperatureValue, comfortLevel }) => {
   return (
     <div className="flex items-center   w-fit  px-2 py-2  ">
       <img
+        alt={"temperature icon"}
         src={
           temperatureValue >= 0 && temperatureValue <= 15
             ? "assets/images/tempFreezing.png"
