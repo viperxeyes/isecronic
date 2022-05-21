@@ -6,7 +6,7 @@ import GasCard from "components/GasCard";
 import HumidityCard from "components/HumidityCard";
 import ConnectionCard from "components/ConnectionCard";
 
-export default function Dashboard() {
+export default function DashboardBackup() {
   // const [messages, setMessages] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState();
   const [controllerStatus, setControllerStatus] = useState();
