@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({ items }) {
   return (
-    <div className=" bg-gray-900 dark  w-20 flex-none flex flex-col min-h-screen h-screen  ">
-      <div className=" overflow-y-auto flex flex-col  dark:text-white scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
+    <div className=" bg-gray-900 dark  w-28 flex-none flex flex-col min-h-screen h-screen  pr-2 ">
+      <img src="logo.png" alt="isecronic" className="px-3 py-5" />
+      <div className=" overflow-y-auto flex flex-col  rounded-tr-2xl  bg-slate-800/20   h-full dark:text-white scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
         <SideBarIcon icon="fa-layer-group" />
         <SideBarIcon />
         {items &&
-          items.map((item) => {
-            return <SideBarIcon icon={item.name} />;
+          items.map((item, i) => {
+            return <SideBarIcon key={i} icon={item.name} />;
           })}
 
         {items && <SideBarIcon />}
@@ -36,7 +37,7 @@ const SideBarIcon = ({ icon, image }) => {
     >
       <div className=" group-hover:border-white border-l-4 border-transparent  group-hover:h-6 scale-y-75  h-3 transform transition-all rounded-r-lg  duration-200 ease-linear group-focus:border-white group-focus:h-12 "></div>
       <i
-        className={`${icon} fad  fa-lg relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto bg-gray-700 text-blue-400 hover:bg-blue-600 hover:text-white rounded-3xl hover:rounded-xl transition-all duration-200 ease-linear `}
+        className={`${icon} fad  fa-lg relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto bg-slate-800 text-blue-400 hover:bg-blue-600 hover:text-white rounded-3xl hover:rounded-xl transition-all duration-200 ease-linear `}
       ></i>
     </button>
   ) : image ? (

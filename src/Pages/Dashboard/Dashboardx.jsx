@@ -5,7 +5,6 @@ import TemperatureCard from "components/TemperatureCard";
 import GasCard from "components/GasCard";
 import HumidityCard from "components/HumidityCard";
 import ConnectionCard from "components/ConnectionCard";
-import ComfortCard from "components/ComfortCard";
 
 export default function Dashboard() {
   // const [messages, setMessages] = useState([]);
@@ -18,18 +17,36 @@ export default function Dashboard() {
   const [comfortLevel, setComfortLevel] = useState("Initializing...");
   const [mainLightStatus, setMainLightStatus] = useState(false);
   const [client, setClient] = useState(null);
+  // if (client !== null) {
+  //   client.on("message", (topic, payload, packet) => {
+  //     console.log(topic, payload.toString());
+  //     if (topic == "dia-room/gas/value") {
+  //       setGasValue(payload.toString());
+  //     }
+  //     if (topic == "dia-room/controller/status") {
+  //       setControllerStatus(payload.toString());
+  //     }
+  //     if (topic == "dia-room/temperature/value") {
+  //       setTemperatureValue(payload.toString());
+  //     }
+  //     if (topic == "dia-room/humidity/value") {
+  //       setHumidityValue(payload.toString());
+  //     }
+  //     if (topic == "dia-room/comfort/value") {
+  //       setComfortLevel(payload.toString());
+  //     }
+  //     if (topic == "dia-room/mainLight/status") {
+  //       if (payload.toString().includes("on")) {
+  //         setMainLightStatus(true);
+  //       } else {
+  //         setMainLightStatus(false);
+  //       }
+  //     }
+  //   });
+  // }
 
   useEffect(() => {
-    const client = mqtt.connect({
-      keepalive: 5,
-      hostname:
-        process.env.NODE_ENV === "production"
-          ? process.env.REACT_APP_PRODUCTION_ADDRESS
-          : process.env.REACT_APP_DEVELOPMENT_ADDRESS,
-      port: 9883,
-      protocol: "wss",
-      keepalive: 10,
-    });
+    const client = mqtt.connect("ws://192.168.1.130:9001");
     client.on("connect", () => {
       setConnectionStatus("online");
       client.subscribe("dia-room/controller/status");
@@ -71,6 +88,38 @@ export default function Dashboard() {
       }
     });
 
+    // let client = null;
+    // if (client == null) {
+    //   client = mqtt.connect({
+    //     clientId: "React App",
+
+    //     reconnectPeriod: 5000,
+
+    //     hostname:
+    //       process.env.NODE_ENV === "production"
+    //         ? "kaust-backend.giize.com"
+    //         : "192.168.1.130",
+    //     port: 9883,
+    //     protocol: "wss",
+
+    //     clientId: "React App",
+    //   });
+    //   client.on("connect", () => {
+    //     setConnectionStatus("online");
+    //     client.subscribe("dia-room/controller/status");
+    //     client.subscribe("dia-room/gas/value");
+    //     client.subscribe("dia-room/temperature/value");
+    //     client.subscribe("dia-room/humidity/value");
+    //     client.subscribe("dia-room/comfort/value");
+    //     client.subscribe("dia-room/mainLight/status");
+    //   });
+
+    //   client.on("disconnect", () => {
+    //     setConnectionStatus("offline");
+    //   });
+
+    //   setClient(client);
+    // }
     return () => {
       if (client !== null) {
         client.end();
@@ -78,11 +127,10 @@ export default function Dashboard() {
       }
     };
   }, []);
-
-  //Interface Start
   return (
-    <div className="flex  flex-col space-y-5 ">
-      <div className="flex w-fit flex-row space-x-5">
+    <div className="flex  flex-col space-y-5 p-5">
+      <div className="flex flex-row space-x-5">
+        <ConnectionCard title={"Server"} connectionStatus={connectionStatus} />
         <ConnectionCard
           title={"Controller"}
           connectionStatus={controllerStatus}
@@ -91,15 +139,12 @@ export default function Dashboard() {
 
       <div className="flex flex-col space-y-5">
         <GasCard gasValue={gasValue} gasDetected={gasDetected} />
-        <div className="flex items-center">
-          <TemperatureCard
-            temperatureValue={temperatureValue}
-            comfortLevel={comfortLevel}
-          />
+        <TemperatureCard
+          temperatureValue={temperatureValue}
+          comfortLevel={comfortLevel}
+        />
 
-          <HumidityCard humidityValue={humidityValue} />
-          <ComfortCard comfortLevel={comfortLevel} />
-        </div>
+        <HumidityCard humidityValue={humidityValue} />
       </div>
 
       <button

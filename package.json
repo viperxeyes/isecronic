@@ -4,23 +4,23 @@
   "private": true,
   "homepage": "http://isecronic.com",
   "dependencies": {
-   
+    "@dicebear/avatars": "^4.10.2",
+    "@dicebear/personas": "^4.10.2",
+    "buffer": "^6.0.3",
     "mqtt": "^4.3.7",
     "mqtt-react-hooks": "^2.0.3",
     "paho-mqtt": "^1.1.0",
     "precompiled-mqtt": "^4.3.13",
-
+    "process": "^0.11.10",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-icons": "^4.3.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.12.0",
+    "stream-browserify": "^3.0.0",
     "url": "^0.11.0",
-    "web-vitals": "^2.1.4",
-    "buffer": "^6.0.3",
-"process": "^0.11.10",
-"stream-browserify": "^3.0.0"
-
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -51,8 +51,8 @@
     "file-loader": "^6.2.0",
     "gh-pages": "^4.0.0",
     "postcss": "^8.4.13",
+    "react-app-rewired": "^2.2.1",
     "tailwindcss": "^3.0.24",
-    "url-loader": "^4.1.1",
-    "react-app-rewired": "^2.2.1" 
+    "url-loader": "^4.1.1"
   }
 }

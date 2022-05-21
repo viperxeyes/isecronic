@@ -26,6 +26,7 @@ ComfortState cf;
 int mq2Pin = 35;
 int dhtPin = 17;
 int mainLightPin = 25;
+int mq2DigitalPin = 16;
 
 void connectToWifi()
 {
@@ -153,6 +154,7 @@ void onMqttMessage(char *topic, char *payload, AsyncMqttClientMessageProperties 
 void setup()
 {
   pinMode(mainLightPin, OUTPUT);
+  pinMode(mq2DigitalPin, INPUT_PULLUP);
   Serial.begin(115200);
   Serial.println();
   Serial.println();
@@ -171,6 +173,7 @@ void setup()
   mqttClient.setServer(MQTT_HOST, MQTT_PORT);
   mqttClient.setWill("dia-room/controller/status", 1, true, "offline");
   mqttClient.setClientId("dia-room-controller");
+  mqttClient.setKeepAlive(7);
 
   dht.setup(dhtPin, DHTesp::DHT11);
   Serial.println("DHT initiated");
@@ -240,8 +243,10 @@ bool getTemperature()
 void getGasLevel()
 {
   int mq2SensorValue = analogRead(mq2Pin);
+  int mq2DigitalPinValue = digitalRead(mq2DigitalPin);
 
   mqttClient.publish("dia-room/gas/value", 2, false, String(mq2SensorValue).c_str());
+  mqttClient.publish("dia-room/gas/status", 2, false, String(mq2DigitalPinValue).c_str());
 }
 
 void loop()

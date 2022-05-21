@@ -2,7 +2,7 @@ import React from "react";
 
 const TemperatureCard = ({ temperatureValue, comfortLevel }) => {
   return (
-    <div className="flex items-center bg-slate-800 w-[350px]   px-5 py-2 rounded-lg space-x-2 shadow-lg">
+    <div className="flex items-center   w-fit  px-2 py-2  ">
       <img
         src={
           temperatureValue >= 0 && temperatureValue <= 15
@@ -15,12 +15,11 @@ const TemperatureCard = ({ temperatureValue, comfortLevel }) => {
             ? "assets/images/tempHoy.png"
             : "assets/images/tempBlazing.png"
         }
-        className="w-[64px] h-[64px]"
+        className="w-[32px] h-[32px]"
       />
-      <div className="flex flex-col">
-        <span className={`text-2xl font-bold`}>Comfort {comfortLevel}</span>
-        <span className="text-2xl font-bold">
-          Temperature : {Math.round(temperatureValue)} &deg; C
+      <div className="flex space-x-2 ">
+        <span className="text-sm font-bold">
+          {Math.round(temperatureValue)} &deg; C
         </span>
       </div>
     </div>
