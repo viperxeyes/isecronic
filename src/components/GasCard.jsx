@@ -31,7 +31,21 @@ const GasCard = ({ gasValue, gasDetected }) => {
             ? "Warning"
             : "Danger"}
         </span>
-        <span className="text-sm font-bold">Gas Level : {gasValue}</span>
+        <span className="text-sm font-bold">
+          Gas Level&nbsp;
+          {gasValue.length === 1 ? (
+            <> {gasValue}&nbsp;&nbsp;&nbsp;</>
+          ) : gasValue.length === 2 ? (
+            <> {gasValue}&nbsp;&nbsp;</>
+          ) : gasValue.length === 3 ? (
+            <>
+              {gasValue}
+              &nbsp;
+            </>
+          ) : (
+            gasValue
+          )}
+        </span>
       </div>
       {gasValue <= 350 ? (
         <FaCheckCircle className="w-6 h-6 text-green-400   " />

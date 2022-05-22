@@ -6,7 +6,7 @@ import GasCard from "components/GasCard";
 import HumidityCard from "components/HumidityCard";
 import ConnectionCard from "components/ConnectionCard";
 import ComfortCard from "components/ComfortCard";
-
+import WeatherContent from "components/WeatherContent";
 export default function DashboardCopy2() {
   // const [messages, setMessages] = useState([]);
 
@@ -20,6 +20,7 @@ export default function DashboardCopy2() {
   const [client, setClient] = useState(null);
 
   useEffect(() => {
+    // getWeather();
     const client = mqtt.connect({
       keepalive: 5,
       hostname:
@@ -41,7 +42,7 @@ export default function DashboardCopy2() {
     });
 
     client.on("message", (topic, payload, packet) => {
-      console.log(topic, payload.toString());
+      // console.log(topic, payload.toString());
       if (topic === "dia-room/gas/value") {
         setGasValue(payload.toString());
       }
@@ -80,33 +81,40 @@ export default function DashboardCopy2() {
   //Interface Start
   return (
     <div className="flex  flex-col space-y-5 ">
-      <div className="flex w-fit flex-row space-x-5">
-        <ConnectionCard
-          title={"Controller"}
-          connectionStatus={controllerStatus}
-        />
-      </div>
+      <WeatherContent comfortLevel={comfortLevel} />
 
       <div className="flex flex-col space-y-5">
-        <GasCard gasValue={gasValue} gasDetected={gasDetected} />
-        <div className="flex items-center">
-          <TemperatureCard
-            temperatureValue={temperatureValue}
-            comfortLevel={comfortLevel}
-          />
-
-          <HumidityCard humidityValue={humidityValue} />
-          <ComfortCard comfortLevel={comfortLevel} />
+        <div className="flex items-center justify-between">
+          <div className="flex space-x-2 items-center">
+            <span className="font-bold bg-blue-500/30 px-3 py-1 rounded">
+              Dia Room
+            </span>
+            <div className="flex w-fit flex-row space-x-5">
+              <ConnectionCard
+                title={"Controller"}
+                connectionStatus={controllerStatus}
+              />
+            </div>
+          </div>
+          <div className="flex items-center">
+            <TemperatureCard
+              temperatureValue={temperatureValue}
+              comfortLevel={comfortLevel}
+            />
+            <HumidityCard humidityValue={humidityValue} />
+            <ComfortCard comfortLevel={comfortLevel} />
+          </div>
         </div>
+        <div className="self-end"></div>
       </div>
-
+      <GasCard gasValue={gasValue} gasDetected={gasDetected} />
       <button
         onClick={() => {
           mainLightStatus
             ? client.publish("dia-room/mainLight/command", "off")
             : client.publish("dia-room/mainLight/command", "on");
         }}
-        className="bg-slate-800 flex flex-col  items-center justify-center group space-y-5 hover:bg-slate-800/90 shadow-md hover:shadow-lg transition-all duration-300 ease-out rounded-lg px-5 py-2 min-w-fit w-[180px] min-h-fit h-[150px]"
+        className="bg-slate-800 flex flex-col  items-center justify-center group space-y-5 hover:bg-slate-800/90 shadow-md hover:shadow-lg transition-all duration-300 ease-out rounded-lg px-5 py-2 min-w-fit w-[205px] min-h-fit h-[150px]"
       >
         <span>Main Light</span>
         <img
@@ -116,7 +124,7 @@ export default function DashboardCopy2() {
               : "assets/images/lightOff.png"
           }
           alt="main light"
-          className="w-[90px] h-[90px] group-hover:w-[95px] group-hover:h-[95px]  transition-all duration-300 ease-out"
+          className="w-[90px] h-[90px] group-hover:w-[95px] group-hover:h-[95px]  transition-all duration-100 ease-out"
         />
       </button>
     </div>
