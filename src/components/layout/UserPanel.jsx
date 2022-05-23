@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
-import mqtt from "mqtt";
-import ConnectionCard from "components/ConnectionCard";
-export default function UserPanel() {
-  const [connectionStatus, setConnectionStatus] = useState();
-
-  useEffect(() => {
-    const client = mqtt.connect({
-      hostname:
-        process.env.NODE_ENV === "production"
-          ? process.env.REACT_APP_PRODUCTION_ADDRESS
-          : process.env.REACT_APP_DEVELOPMENT_ADDRESS,
-      port: 9883,
-      protocol: "wss",
-      keepalive: 5,
-    });
-    client.on("connect", () => {
-      setConnectionStatus("online");
-    });
-  }, []);
+import React from "react";
+import { FaRegBell } from "react-icons/fa";
+import { AiOutlineSetting } from "react-icons/ai";
+import AccountButton from "./AccountButton";
+const UserPanel = () => {
   return (
-    <div className="flex items-center  h-12 w-full  ">
-      <ConnectionCard title={"Server"} connectionStatus={connectionStatus} />
+    <div className="flex  w-full space-x-4 justify-between px-10">
+      <div className="flex space-x-5">
+        <button className="bg-slate-800 rounded-lg w-12 h-12 flex items-center justify-center group">
+          <FaRegBell className="text-blue-500 w-6 h-6  group-hover:animate-pulse group-hover:text-slate-300 transition-all duration-300 ease-out " />
+        </button>
+        <button className="bg-slate-800 rounded-lg w-12 h-12 flex items-center justify-center  group">
+          <AiOutlineSetting className="text-blue-500  w-6 h-6 group-hover:rotate-90 group-hover:text-slate-300 transition-all duration-300 ease-out" />
+        </button>
+      </div>
+
+      <AccountButton />
     </div>
   );
-}
+};
+
+export default UserPanel;

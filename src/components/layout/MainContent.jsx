@@ -8,15 +8,7 @@ const MainContent = () => {
     return <ClipLoader loading color="#3c88fa" />;
   };
   return (
-    <div className="bg-gray-900 ml-2  text-gray-200 pt-12 space-y-8 px-5  flex-1 overflow-y-auto  ">
-      <div className="flex items-center bg-slate-800/60 border-2 border-transparent focus-within:border-blue-500/50 rounded-xl px-2 transition-all duration-300 ease-out shadow-md">
-        <FaSearch className="text-blue-500" />
-        <input
-          type={"search"}
-          placeholder={"Search"}
-          className={"w-full mx-auto bg-transparent px-2 py-2 outline-none "}
-        />
-      </div>
+    <div className="  text-gray-200  space-y-8 flex flex-1 overflow-y-hidden   ">
       <Suspense fallback={loading()}>
         <Routes>
           {routes.map((route, idx) => {

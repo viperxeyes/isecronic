@@ -4,10 +4,13 @@ import Sidebar from "./Sidebar";
 
 //import ActionPanel from "./ActionPanel";
 import ControlPanel from "./ControlPanel";
-import UserPanel from "./UserPanel";
+
 import { ClipLoader } from "react-spinners";
 import MainContent from "./MainContent";
+import WeatherContent from "components/WeatherContent";
 
+import Header from "components/layout/Header";
+import ServerPanel from "./ServerPanel";
 const ActionPanel = React.lazy(() => import("./ActionPanel"));
 //const DefaultHeader = React.lazy(() => import("./DefaultHeader"));
 
@@ -16,29 +19,36 @@ export default function AppContainer() {
     return <ClipLoader loading color="#3c88fa" />;
   };
 
-  const items = [{ name: "fa-user" }, { name: "fa-trash" }];
+  const items = [
+    { name: "fa-sensor" },
+    { name: "fa-sensor" },
+    { name: "fa-sensor" },
+    { name: "fa-sensor" },
+    { name: "fa-sensor" },
+    { name: "fa-sensor" },
+    { name: "fa-sensor" },
+    { name: "fa-sensor" },
+  ];
 
   return (
-    <div className="flex bg-gray-900 flex-1 text-slate-300 ">
-      <Suspense fallback={loading()}>
-        <Sidebar items={items} />
-      </Suspense>
-      <div className="flex flex-1 flex-col ml-6  h-screen ">
-        <div className="flex flex-1 overflow-y-hidden">
-          <div className=" w-56 flex-none   flex flex-col justify-between    ">
-            <p className="text-5xl self-center py-9">iSecronic</p>
-            <Suspense fallback={loading()}>
-              <ControlPanel />
-              <UserPanel />
-            </Suspense>
+    <div className="flex flex-col h-screen min-h-screen  text-slate-300  bg-gray-900 overflow-hidden  ">
+      <Header />
+      <div className="flex space-x-4 flex-1 overflow-hidden">
+        <div className="[flex:0.125] flex ">
+          <Sidebar items={items} />
+        </div>
+        <div className="[flex:0.25]   ">
+          <div className="justify-between h-full flex flex-col">
+            <ControlPanel />
+            <ServerPanel />
           </div>
-
-          <div className=" flex-1 flex justify-between dark ">
-            <MainContent />
-            <Suspense fallback={loading()}>
-              <ActionPanel />
-            </Suspense>
-          </div>
+        </div>
+        <div className="flex-1  flex flex-col pb-2">
+          <WeatherContent />
+          <MainContent />
+        </div>
+        <div className="[flex:0.5] flex  ">
+          <ActionPanel />
         </div>
       </div>
     </div>

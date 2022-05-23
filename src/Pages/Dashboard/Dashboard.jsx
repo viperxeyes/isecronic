@@ -7,6 +7,10 @@ import HumidityCard from "components/HumidityCard";
 import ConnectionCard from "components/ConnectionCard";
 import ComfortCard from "components/ComfortCard";
 import WeatherContent from "components/WeatherContent";
+import SensorOutputButton from "components/SensorOutputButton";
+import MotionCard from "components/MotionCard";
+import WindowCard from "components/WindowCard";
+import AlarmCard from "components/AlarmCard";
 export default function DashboardCopy2() {
   // const [messages, setMessages] = useState([]);
 
@@ -80,9 +84,7 @@ export default function DashboardCopy2() {
 
   //Interface Start
   return (
-    <div className="flex  flex-col space-y-5 ">
-      <WeatherContent comfortLevel={comfortLevel} />
-
+    <div className="flex  flex-1 flex-col space-y-5    ">
       <div className="flex flex-col space-y-5">
         <div className="flex items-center justify-between">
           <div className="flex space-x-2 items-center">
@@ -107,26 +109,70 @@ export default function DashboardCopy2() {
         </div>
         <div className="self-end"></div>
       </div>
-      <GasCard gasValue={gasValue} gasDetected={gasDetected} />
-      <button
-        onClick={() => {
-          mainLightStatus
-            ? client.publish("dia-room/mainLight/command", "off")
-            : client.publish("dia-room/mainLight/command", "on");
-        }}
-        className="bg-slate-800 flex flex-col  items-center justify-center group space-y-5 hover:bg-slate-800/90 shadow-md hover:shadow-lg transition-all duration-300 ease-out rounded-lg px-5 py-2 min-w-fit w-[205px] min-h-fit h-[150px]"
-      >
-        <span>Main Light</span>
-        <img
-          src={
-            mainLightStatus
-              ? "assets/images/lightOn.png"
-              : "assets/images/lightOff.png"
-          }
-          alt="main light"
-          className="w-[90px] h-[90px] group-hover:w-[95px] group-hover:h-[95px]  transition-all duration-100 ease-out"
+      <div className=" grid grid-cols-4 gap-y-9 overflow-y-scroll ">
+        <GasCard gasValue={gasValue} gasDetected={gasDetected} />
+        <MotionCard motionDetected={false} />
+        <WindowCard windowOpen={false} />
+        <AlarmCard alarmDetected={false} />
+      </div>
+
+      <div className=" grid grid-cols-4 gap-y-9 overflow-y-scroll ">
+        <SensorOutputButton
+          sensor={{
+            name: "Room Light",
+            type: "bulb",
+            controller: "dia-room",
+            topic: "mainLight/command",
+            status: mainLightStatus,
+          }}
+          variant
+          client={client}
         />
-      </button>
+        <SensorOutputButton
+          sensor={{
+            name: "Room TV",
+            type: "tv",
+            controller: "dia-room",
+            topic: "mainLight/command",
+            status: mainLightStatus,
+          }}
+          variant
+          client={client}
+        />
+        <SensorOutputButton
+          sensor={{
+            name: "Door",
+            type: "door",
+            controller: "dia-room",
+            topic: "mainLight/command",
+            status: mainLightStatus,
+          }}
+          variant
+          client={client}
+        />
+        <SensorOutputButton
+          sensor={{
+            name: "Fan",
+            type: "fan",
+            controller: "dia-room",
+            topic: "mainLight/command",
+            status: mainLightStatus,
+          }}
+          variant
+          client={client}
+        />
+        <SensorOutputButton
+          sensor={{
+            name: "Air Condition",
+            type: "air_condition",
+            controller: "dia-room",
+            topic: "mainLight/command",
+            status: mainLightStatus,
+          }}
+          variant
+          client={client}
+        />
+      </div>
     </div>
   );
 }

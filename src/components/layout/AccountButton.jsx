@@ -39,7 +39,7 @@ const AccountButton = () => {
   //a function that generate random color
 
   return (
-    <button className="flex justify-between items-center w-full  h-full border-r-2 border-transparent  hover:opacity-70 transition-all duration-300 ease-out">
+    <button className="flex justify-between items-center w-full  h-full border-transparent  hover:opacity-70 transition-all duration-300 ease-out">
       <div className="flex items-center justify-center">
         <img src={svg} className=" w-12 h-12 rounded-full" alt="account icon" />
         <div className="ml-4">Dia Eldin</div>

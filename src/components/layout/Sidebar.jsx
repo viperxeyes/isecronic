@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({ items }) {
   return (
-    <div className=" bg-gray-900 dark  w-28 flex-none flex flex-col min-h-screen h-screen  pr-2 ">
-      <img src="logo.png" alt="isecronic" className="px-3 py-5" />
-      <div className=" overflow-y-auto flex flex-col  rounded-tr-2xl  bg-slate-800/20   h-full dark:text-white scrollbar-thumb-gray-500 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
+    <div className=" flex flex-col  w-28 shrink-0  bg-slate-800/20  rounded-tr-2xl     dark:text-white ">
+      <div className="flex flex-col overflow-y-auto rounded-full   py-8 mt-6     ">
         <SideBarIcon icon="fa-layer-group" />
+
         <SideBarIcon />
         {items &&
           items.map((item, i) => {

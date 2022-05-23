@@ -15,8 +15,6 @@ module.exports = function override(config, env) {
       Buffer: ["buffer", "Buffer"],
     }),
   ];
-  // console.log(config.resolve)
-  // console.log(config.plugins)
 
   return config;
 };

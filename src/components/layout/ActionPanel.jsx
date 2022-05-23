@@ -1,37 +1,34 @@
+import SensorOutputButton from "components/SensorOutputButton";
 import React from "react";
-import { FaRegBell } from "react-icons/fa";
-import { AiOutlineSetting } from "react-icons/ai";
-import AccountButton from "./AccountButton";
+import { FaChevronCircleDown } from "react-icons/fa";
 export default function ActionPanel() {
+  const sensors = [
+    { name: "Air Condition", type: "air_condition", id: "1" },
+    {
+      name: "Refrigerator",
+      type: "refrigerator",
+      id: "2",
+      status: true,
+    },
+    { name: "Main Door", type: "door", id: "3" },
+    { name: "Sound System", type: "sound_system", id: "4" },
+    { name: "Gas Valve", type: "valve", id: "5", status: true },
+    { name: "Router", type: "router", id: "6", status: true },
+  ];
+
   return (
-    <div className="bg-gray-900 pl-5   dark:text-slate-300 w-1/3 flex flex-col overflow-y-auto scrollbar-thumb-slate-500 scrollbar-track-slate-100 scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md items-center ">
-      <div className="flex  w-full pt-12 pb-9 space-x-4 justify-between px-10">
-        <div className="flex space-x-5">
-          <button className="bg-slate-800 rounded-lg w-12 h-12 flex items-center justify-center group">
-            <FaRegBell className="text-blue-500 w-6 h-6  group-hover:animate-pulse group-hover:text-slate-300 transition-all duration-300 ease-out " />
-          </button>
-          <button className="bg-slate-800 rounded-lg w-12 h-12 flex items-center justify-center  group">
-            <AiOutlineSetting className="text-blue-500  w-6 h-6 group-hover:rotate-90 group-hover:text-slate-300 transition-all duration-300 ease-out" />
-          </button>
+    <div className="bg-gray-900 w-full  dark:text-slate-300  flex flex-col overflow-y-auto  items-center ">
+      <div className="   shadow-xl relative   bg-slate-800/20 w-full flex-1  items-center  rounded-tl-2xl">
+        <div className="  grid grid-cols-2 place-items-center h-[345px] px-2 py-2   overflow-y-scroll gap-5 mx-auto my-5 w-fit">
+          {sensors.map((sensor) => (
+            <SensorOutputButton key={sensor.id} sensor={sensor} />
+          ))}
+          {sensors.length > 6 && (
+            <div className="absolute  animate-bounce bottom-1/2  rounded-full flex items-center justify-center ">
+              <FaChevronCircleDown className="w-8 h-8 text-slate-400 " />
+            </div>
+          )}
         </div>
-
-        <AccountButton />
-      </div>
-      <div className="   shadow-xl   bg-black/20 w-full flex-1 flex flex-col items-center  rounded-tl-2xl">
-        {/* <button className="bg-slate-700  rounded-md h-8 w-40 px-4 hover:bg-slate-900 mt-2 flex items-center border-2 border-transparent focus:border-slate-400 transition-all ease-linear">
-          <i className="fad fa-network-wired fa-lg mr-2 text-blue-400"></i>
-          Gateways
-        </button>
-
-        <button className="bg-slate-700  rounded-md h-8 w-40 px-4 hover:bg-slate-900 mt-2 flex items-center border-2 border-transparent focus:border-slate-400 transition-all ease-linear">
-          <i className="fad fa-microchip fa-lg mr-2 text-blue-400"></i>
-          Controllers
-        </button>
-
-        <button className="bg-slate-700 align-middle rounded-md h-8 w-40 px-4 hover:bg-slate-900 mt-2 flex items-center border-2 border-transparent focus:border-slate-400 transition-all ease-linear">
-          <i className="fad fa-sensor fa-lg mr-2 text-blue-400"></i>
-          Sensors
-        </button> */}
       </div>
     </div>
   );

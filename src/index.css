@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 @import "./icons/webfonts/faall.min.css";
+::-webkit-scrollbar {
+    width: 7px;
+  }
+  .react-sweet-progress-symbol {
+    color: aqua !important;
+  }
+  /* Track */
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply [border:1px_solid_#1e293b]   bg-[#efefef] rounded-lg;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ea3a6080;
+  }
