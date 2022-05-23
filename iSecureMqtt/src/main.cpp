@@ -10,6 +10,7 @@ extern "C"
 }
 #include <AsyncMqttClient.h>
 #include <DHTesp.h>
+#include <ArduinoOTA.h>
 
 #define WIFI_SSID "Zaicon"
 #define WIFI_PASSWORD "zizo1976"
@@ -23,10 +24,14 @@ TimerHandle_t wifiReconnectTimer;
 DHTesp dht;
 ComfortState cf;
 
-int mq2Pin = 35;
+int fanPowerPin = 14;
+int mq2DigitalPin = 16;
 int dhtPin = 17;
 int mainLightPin = 25;
-int mq2DigitalPin = 16;
+int doorPin = 26;
+int tvPin = 32;
+int airConditionPin = 33;
+int mq2Pin = 35;
 
 void connectToWifi()
 {
@@ -66,6 +71,10 @@ void onMqttConnect(bool sessionPresent)
   Serial.println(sessionPresent);
   uint16_t packetIdSub = mqttClient.subscribe("dia-room", 2);
   mqttClient.subscribe("dia-room/mainLight/command", 1);
+  mqttClient.subscribe("dia-room/door/command", 1);
+  mqttClient.subscribe("dia-room/tv/command", 1);
+  mqttClient.subscribe("dia-room/airCondition/command", 1);
+  mqttClient.subscribe("dia-room/fanPower/command", 1);
 
   Serial.print("Subscribing at QoS 2, packetId: ");
   Serial.println(packetIdSub);
@@ -136,6 +145,62 @@ void onMqttMessage(char *topic, char *payload, AsyncMqttClientMessageProperties 
       mqttClient.publish("dia-room/mainLight/status", 2, true, "off");
     }
   }
+
+  if (strcmp(topic, "dia-room/door/command") == 0)
+  {
+    if (strcmp(payload, "on") == 0)
+    {
+      digitalWrite(doorPin, HIGH);
+      mqttClient.publish("dia-room/door/status", 2, true, "on");
+    }
+    else
+    {
+      digitalWrite(doorPin, LOW);
+      mqttClient.publish("dia-room/door/status", 2, true, "off");
+    }
+  }
+
+  if (strcmp(topic, "dia-room/tv/command") == 0)
+  {
+    if (strcmp(payload, "on") == 0)
+    {
+      digitalWrite(tvPin, HIGH);
+      mqttClient.publish("dia-room/tv/status", 2, true, "on");
+    }
+    else
+    {
+      digitalWrite(tvPin, LOW);
+      mqttClient.publish("dia-room/tv/status", 2, true, "off");
+    }
+  }
+
+  if (strcmp(topic, "dia-room/fanPower/command") == 0)
+  {
+    if (strcmp(payload, "on") == 0)
+    {
+      digitalWrite(fanPowerPin, HIGH);
+      mqttClient.publish("dia-room/fanPower/status", 2, true, "on");
+    }
+    else
+    {
+      digitalWrite(fanPowerPin, LOW);
+      mqttClient.publish("dia-room/fanPower/status", 2, true, "off");
+    }
+  }
+
+  if (strcmp(topic, "dia-room/airCondition/command") == 0)
+  {
+    if (strcmp(payload, "on") == 0)
+    {
+      digitalWrite(airConditionPin, HIGH);
+      mqttClient.publish("dia-room/airCondition/status", 2, true, "on");
+    }
+    else
+    {
+      digitalWrite(airConditionPin, LOW);
+      mqttClient.publish("dia-room/airCondition/status", 2, true, "off");
+    }
+  }
 }
 
 // if ((String)topic == "dia-room/mainLight/value" && (String)payload == "on")
@@ -154,6 +219,11 @@ void onMqttMessage(char *topic, char *payload, AsyncMqttClientMessageProperties 
 void setup()
 {
   pinMode(mainLightPin, OUTPUT);
+  pinMode(doorPin, OUTPUT);
+  pinMode(fanPowerPin, OUTPUT);
+  pinMode(tvPin, OUTPUT);
+  pinMode(airConditionPin, OUTPUT);
+
   pinMode(mq2DigitalPin, INPUT_PULLUP);
   Serial.begin(115200);
   Serial.println();
@@ -179,6 +249,31 @@ void setup()
   Serial.println("DHT initiated");
 
   connectToWifi();
+  ArduinoOTA
+      .onStart([]()
+               {
+      String type;
+      if (ArduinoOTA.getCommand() == U_FLASH)
+        type = "sketch";
+      else // U_SPIFFS
+        type = "filesystem";
+
+      // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
+      Serial.println("Start updating " + type); })
+      .onEnd([]()
+             { Serial.println("\nEnd"); })
+      .onProgress([](unsigned int progress, unsigned int total)
+                  { Serial.printf("Progress: %u%%\r", (progress / (total / 100))); })
+      .onError([](ota_error_t error)
+               {
+      Serial.printf("Error[%u]: ", error);
+      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
+      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
+      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
+      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
+      else if (error == OTA_END_ERROR) Serial.println("End Failed"); });
+
+  ArduinoOTA.begin();
 }
 
 bool getTemperature()
@@ -251,6 +346,7 @@ void getGasLevel()
 
 void loop()
 {
+  ArduinoOTA.handle();
   getTemperature();
   getGasLevel();
 

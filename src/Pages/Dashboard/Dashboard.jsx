@@ -21,6 +21,10 @@ export default function DashboardCopy2() {
   const [humidityValue, setHumidityValue] = useState(0);
   const [comfortLevel, setComfortLevel] = useState("Initializing...");
   const [mainLightStatus, setMainLightStatus] = useState(false);
+  const [fanPowerStatus, setFanPowertatus] = useState(false);
+  const [doorStatus, setDoorStatus] = useState(false);
+  const [tvStatus, setTvStatus] = useState(false);
+  const [airConditionStatus, setAirConditionStatus] = useState(false);
   const [client, setClient] = useState(null);
 
   useEffect(() => {
@@ -42,11 +46,19 @@ export default function DashboardCopy2() {
       client.subscribe("dia-room/humidity/value");
       client.subscribe("dia-room/comfort/value");
       client.subscribe("dia-room/mainLight/status");
+      client.subscribe("dia-room/door/status");
+      client.subscribe("dia-room/door/command");
+      client.subscribe("dia-room/tv/status");
+      client.subscribe("dia-room/fanPower/status");
+      client.subscribe("dia-room/airCondition/status");
       setClient(client);
     });
 
     client.on("message", (topic, payload, packet) => {
       // console.log(topic, payload.toString());
+      if (topic === "dia-room/door/command") {
+        console.log(payload.toString());
+      }
       if (topic === "dia-room/gas/value") {
         setGasValue(payload.toString());
       }
@@ -70,6 +82,34 @@ export default function DashboardCopy2() {
           setMainLightStatus(true);
         } else {
           setMainLightStatus(false);
+        }
+      }
+      if (topic === "dia-room/door/status") {
+        if (payload.toString().includes("on")) {
+          setDoorStatus(true);
+        } else {
+          setDoorStatus(false);
+        }
+      }
+      if (topic === "dia-room/tv/status") {
+        if (payload.toString().includes("on")) {
+          setTvStatus(true);
+        } else {
+          setTvStatus(false);
+        }
+      }
+      if (topic === "dia-room/fanPower/status") {
+        if (payload.toString().includes("on")) {
+          setFanPowertatus(true);
+        } else {
+          setFanPowertatus(false);
+        }
+      }
+      if (topic === "dia-room/airCondition/status") {
+        if (payload.toString().includes("on")) {
+          setAirConditionStatus(true);
+        } else {
+          setAirConditionStatus(false);
         }
       }
     });
@@ -107,7 +147,6 @@ export default function DashboardCopy2() {
             <ComfortCard comfortLevel={comfortLevel} />
           </div>
         </div>
-        <div className="self-end"></div>
       </div>
       <div className=" grid grid-cols-4 gap-y-9 overflow-y-scroll ">
         <GasCard gasValue={gasValue} gasDetected={gasDetected} />
@@ -133,8 +172,8 @@ export default function DashboardCopy2() {
             name: "Room TV",
             type: "tv",
             controller: "dia-room",
-            topic: "mainLight/command",
-            status: mainLightStatus,
+            topic: "tv/command",
+            status: tvStatus,
           }}
           variant
           client={client}
@@ -144,8 +183,8 @@ export default function DashboardCopy2() {
             name: "Door",
             type: "door",
             controller: "dia-room",
-            topic: "mainLight/command",
-            status: mainLightStatus,
+            topic: "door/command",
+            status: doorStatus,
           }}
           variant
           client={client}
@@ -155,8 +194,8 @@ export default function DashboardCopy2() {
             name: "Fan",
             type: "fan",
             controller: "dia-room",
-            topic: "mainLight/command",
-            status: mainLightStatus,
+            topic: "fanPower/command",
+            status: fanPowerStatus,
           }}
           variant
           client={client}
@@ -166,8 +205,8 @@ export default function DashboardCopy2() {
             name: "Air Condition",
             type: "air_condition",
             controller: "dia-room",
-            topic: "mainLight/command",
-            status: mainLightStatus,
+            topic: "airCondition/command",
+            status: airConditionStatus,
           }}
           variant
           client={client}

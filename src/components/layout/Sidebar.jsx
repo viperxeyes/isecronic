@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({ items }) {
   return (
-    <div className=" flex flex-col  w-28 shrink-0  bg-slate-800/20  rounded-tr-2xl     dark:text-white ">
+    <div className=" flex flex-col lg:w-20 xl:w-28 shrink-0  bg-slate-800/20  rounded-tr-2xl     dark:text-white ">
       <div className="flex flex-col overflow-y-auto rounded-full   py-8 mt-6     ">
         <SideBarIcon icon="fa-layer-group" />
 
