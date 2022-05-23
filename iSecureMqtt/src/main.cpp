@@ -11,6 +11,7 @@ extern "C"
 #include <AsyncMqttClient.h>
 #include <DHTesp.h>
 #include <ArduinoOTA.h>
+#include <Ticker.h>
 
 #define WIFI_SSID "Zaicon"
 #define WIFI_PASSWORD "zizo1976"
@@ -23,6 +24,7 @@ TimerHandle_t mqttReconnectTimer;
 TimerHandle_t wifiReconnectTimer;
 DHTesp dht;
 ComfortState cf;
+Ticker publisherTicker;
 
 int fanPowerPin = 14;
 int mq2DigitalPin = 16;
@@ -33,6 +35,82 @@ int tvPin = 32;
 int airConditionPin = 33;
 int mq2Pin = 35;
 
+
+
+bool getTemperature()
+{
+  // Reading temperature for humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds 'old' (it's a very slow sensor)
+  TempAndHumidity newValues = dht.getTempAndHumidity();
+  // Check if any reads failed and exit early (to try again).
+  if (dht.getStatus() != 0)
+  {
+    Serial.println("DHT11 error status: " + String(dht.getStatusString()));
+    return false;
+  }
+
+  float heatIndex = dht.computeHeatIndex(newValues.temperature, newValues.humidity);
+  float dewPoint = dht.computeDewPoint(newValues.temperature, newValues.humidity);
+  // float cr = dht.getComfortRatio(cf, newValues.temperature, newValues.humidity);
+
+  String comfortStatus;
+  switch (cf)
+  {
+  case Comfort_OK:
+    comfortStatus = "OK";
+    break;
+  case Comfort_TooHot:
+    comfortStatus = "Too Hot";
+    break;
+  case Comfort_TooCold:
+    comfortStatus = "Too Cold";
+    break;
+  case Comfort_TooDry:
+    comfortStatus = "Too Dry";
+    break;
+  case Comfort_TooHumid:
+    comfortStatus = "Too Humid";
+    break;
+  case Comfort_HotAndHumid:
+    comfortStatus = "Hot & Humid";
+    break;
+  case Comfort_HotAndDry:
+    comfortStatus = "Hot & Dry";
+    break;
+  case Comfort_ColdAndHumid:
+    comfortStatus = "Cold & Humid";
+    break;
+  case Comfort_ColdAndDry:
+    comfortStatus = "Cold & Dry";
+    break;
+  default:
+    comfortStatus = "Unknown:";
+    break;
+  };
+
+  // Serial.println(" T:" + String(newValues.temperature) + " H:" + String(newValues.humidity) + " I:" + String(heatIndex) + " D:" + String(dewPoint) + " " + comfortStatus);
+
+  mqttClient.publish("dia-room/temperature/value", 2, false, String(newValues.temperature).c_str());
+  mqttClient.publish("dia-room/humidity/value", 2, false, String(newValues.humidity).c_str());
+  mqttClient.publish("dia-room/comfort/value", 2, false, comfortStatus.c_str());
+
+  return true;
+}
+void getGasLevel()
+{
+  int mq2SensorValue = analogRead(mq2Pin);
+  int mq2DigitalPinValue = digitalRead(mq2DigitalPin);
+
+  mqttClient.publish("dia-room/gas/value", 2, false, String(mq2SensorValue).c_str());
+  mqttClient.publish("dia-room/gas/status", 2, false, String(mq2DigitalPinValue).c_str());
+}
+
+
+
+void getReadings(){
+  getTemperature();
+  getGasLevel();
+}
 void connectToWifi()
 {
   Serial.println("Connecting to Wi-Fi...");
@@ -87,6 +165,7 @@ void onMqttConnect(bool sessionPresent)
 
   Serial.print("Publishing at QoS 2, packetId: ");
   Serial.println(packetIdPub2);
+  publisherTicker.attach(2,getReadings);
 }
 
 void onMqttDisconnect(AsyncMqttClientDisconnectReason reason)
@@ -276,79 +355,11 @@ void setup()
   ArduinoOTA.begin();
 }
 
-bool getTemperature()
-{
-  // Reading temperature for humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (it's a very slow sensor)
-  TempAndHumidity newValues = dht.getTempAndHumidity();
-  // Check if any reads failed and exit early (to try again).
-  if (dht.getStatus() != 0)
-  {
-    Serial.println("DHT11 error status: " + String(dht.getStatusString()));
-    return false;
-  }
-
-  float heatIndex = dht.computeHeatIndex(newValues.temperature, newValues.humidity);
-  float dewPoint = dht.computeDewPoint(newValues.temperature, newValues.humidity);
-  // float cr = dht.getComfortRatio(cf, newValues.temperature, newValues.humidity);
-
-  String comfortStatus;
-  switch (cf)
-  {
-  case Comfort_OK:
-    comfortStatus = "OK";
-    break;
-  case Comfort_TooHot:
-    comfortStatus = "Too Hot";
-    break;
-  case Comfort_TooCold:
-    comfortStatus = "Too Cold";
-    break;
-  case Comfort_TooDry:
-    comfortStatus = "Too Dry";
-    break;
-  case Comfort_TooHumid:
-    comfortStatus = "Too Humid";
-    break;
-  case Comfort_HotAndHumid:
-    comfortStatus = "Hot & Humid";
-    break;
-  case Comfort_HotAndDry:
-    comfortStatus = "Hot & Dry";
-    break;
-  case Comfort_ColdAndHumid:
-    comfortStatus = "Cold & Humid";
-    break;
-  case Comfort_ColdAndDry:
-    comfortStatus = "Cold & Dry";
-    break;
-  default:
-    comfortStatus = "Unknown:";
-    break;
-  };
-
-  // Serial.println(" T:" + String(newValues.temperature) + " H:" + String(newValues.humidity) + " I:" + String(heatIndex) + " D:" + String(dewPoint) + " " + comfortStatus);
-
-  mqttClient.publish("dia-room/temperature/value", 2, false, String(newValues.temperature).c_str());
-  mqttClient.publish("dia-room/humidity/value", 2, false, String(newValues.humidity).c_str());
-  mqttClient.publish("dia-room/comfort/value", 2, false, comfortStatus.c_str());
-
-  return true;
-}
-void getGasLevel()
-{
-  int mq2SensorValue = analogRead(mq2Pin);
-  int mq2DigitalPinValue = digitalRead(mq2DigitalPin);
-
-  mqttClient.publish("dia-room/gas/value", 2, false, String(mq2SensorValue).c_str());
-  mqttClient.publish("dia-room/gas/status", 2, false, String(mq2DigitalPinValue).c_str());
-}
 
 void loop()
 {
   ArduinoOTA.handle();
-  getTemperature();
-  getGasLevel();
+  
 
-  delay(3000);
+ 
 }
