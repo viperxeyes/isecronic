@@ -6,38 +6,6 @@ export default function Sidebar({ items }) {
     <div className="  flex flex-col lg:w-20 xl:w-28 shrink-0  bg-slate-800/20  rounded-tr-2xl  overflow-y-hidden    dark:text-white ">
       <div className="flex flex-col px-1 lg:pr-0 overflow-y-auto rounded-full   py-8 mt-6     ">
         <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
-        <SideBarIcon icon="fa-layer-group" />
 
         <SideBarIcon />
         {items &&
