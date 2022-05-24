@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   WiDaySunny,
@@ -20,18 +20,18 @@ import {
 } from "react-icons/wi";
 const WeatherContent = () => {
   //openWatherMap API function
-  //   const getWeather = async () => {
-  //     navigator.geolocation.getCurrentPosition(async (position) => {
-  //       const lat = position.coords.latitude;
-  //       const long = position.coords.longitude;
-  //       const api_call = await fetch(
-  //         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=134fa6c56b2b59752a740898e4522412`
-  //       );
-  //       const data = await api_call.json();
-  //
-  //       setOutdoorWeather(data);
-  //     });
-  //   };
+  const getWeather = async () => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const lat = position.coords.latitude;
+      const long = position.coords.longitude;
+      const api_call = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=134fa6c56b2b59752a740898e4522412`
+      );
+      const data = await api_call.json();
+
+      setOutdoorWeather(data);
+    });
+  };
 
   const weather = {
     coord: {
@@ -79,6 +79,9 @@ const WeatherContent = () => {
     name: "Giza",
     cod: 200,
   };
+  useEffect(() => {
+    process.env.NODE_ENV === "production" && getWeather();
+  }, []);
 
   const getWeatherIcon = (icon, size) => {
     if (icon === "01d") {
@@ -137,7 +140,7 @@ const WeatherContent = () => {
     }
   };
 
-  const [outdoorWeather] = useState(weather);
+  const [outdoorWeather, setOutdoorWeather] = useState(weather);
   return (
     <div className="bg-slate-800/40 px-3 py-1 rounded-xl grid grid-cols-1 lg:grid-cols-2 grid-rows-1 gap-x-1 md:gap-y-2">
       <div className="space-y-3">
