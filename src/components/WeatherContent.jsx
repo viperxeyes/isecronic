@@ -28,7 +28,7 @@ const WeatherContent = () => {
   //         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=134fa6c56b2b59752a740898e4522412`
   //       );
   //       const data = await api_call.json();
-  //       console.log(data);
+  //
   //       setOutdoorWeather(data);
   //     });
   //   };
@@ -149,7 +149,7 @@ const WeatherContent = () => {
           </span>
           &nbsp;, please let me know if you want to change anything.
         </p>
-        {console.log("weather")}
+
         <div className="flex flex-col">
           <div className="flex space-x-2 items-center">
             <span>{Math.floor(outdoorWeather.main.temp)} &deg; C</span>

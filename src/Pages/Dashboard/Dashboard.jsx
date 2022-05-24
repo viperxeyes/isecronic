@@ -6,7 +6,7 @@ import GasCard from "components/GasCard";
 import HumidityCard from "components/HumidityCard";
 import ConnectionCard from "components/ConnectionCard";
 import ComfortCard from "components/ComfortCard";
-import WeatherContent from "components/WeatherContent";
+
 import SensorOutputButton from "components/SensorOutputButton";
 import MotionCard from "components/MotionCard";
 import WindowCard from "components/WindowCard";
@@ -55,9 +55,7 @@ export default function DashboardCopy2() {
     });
 
     client.on("message", (topic, payload, packet) => {
-      // console.log(topic, payload.toString());
       if (topic === "dia-room/door/command") {
-        console.log(payload.toString());
       }
       if (topic === "dia-room/gas/value") {
         setGasValue(payload.toString());

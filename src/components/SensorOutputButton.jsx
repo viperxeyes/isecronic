@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { CgSmartHomeRefrigerator } from "react-icons/cg";
 import { MdRouter, MdTv, MdSurroundSound, MdSensorDoor } from "react-icons/md";
 import { FaLightbulb, FaRegLightbulb } from "react-icons/fa";
 
 const SensorOutputButton = ({ sensor, variant, client }) => {
   const { status } = sensor;
-  const [checked, setChecked] = React.useState(status);
 
   const [color, setColor] = useState("bg-slate-800");
-  const getColorBasedOnType = (type) => {
+  const getColorBasedOnType = useCallback(() => {
     if (sensor.type.toLowerCase() === "air_condition") {
       !variant && setColor("bg-green-500");
     }
@@ -36,7 +35,7 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
     if (sensor.type.toLowerCase() === "fan") {
       !variant && setColor("bg-slate-800");
     }
-  };
+  }, [sensor.type, variant]);
 
   const getSensorIconBasedOnType = (type, size) => {
     if (sensor.type.toLowerCase() === "refrigerator") {
@@ -55,18 +54,25 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
       return <MdSensorDoor className={`${size}`} />;
     }
     if (sensor.type.toLowerCase() === "valve") {
-      return <img src="assets/images/valve.png" className={`${size}`} />;
+      return (
+        <img src="assets/images/valve.png" alt="valve" className={`${size}`} />
+      );
     }
     if (sensor.type.toLowerCase() === "air_condition") {
       return (
-        <img src="assets/images/air_condition.png" className={`${size}`} />
+        <img
+          src="assets/images/air_condition.png"
+          alt="air condition"
+          className={`${size}`}
+        />
       );
     }
     if (sensor.type.toLowerCase() === "fan") {
       return (
         <img
           src="assets/images/fan.png"
-          className={`${size} ${status && "animate-spin "}`}
+          alt="fan"
+          className={`${size}  ${status && "animate-spin "}`}
         />
       );
     }
@@ -81,8 +87,8 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
   };
 
   useEffect(() => {
-    getColorBasedOnType(sensor.type);
-  }, [sensor, checked]);
+    getColorBasedOnType();
+  }, [getColorBasedOnType]);
   return (
     <button
       className={`  ${color} px-5 flex flex-col justify-between rounded-lg ${
@@ -105,15 +111,9 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
                 : " bg-transparent text-right border-2 border-white/80 "
             }  rounded-full relative overflow-hidden  `}
           >
-            <input
-              type="checkbox"
-              checked={status}
-              className="hidden peer"
-              onChange={() => setChecked(status)}
-            />
             <label
               className={`${
-                status ? " left-full  text-gray-800" : "left-7"
+                status ? " left-full  text-gray-800" : "left-6"
               } transition-all duration-300 ease-in-out absolute text-xs top-1`}
             >
               OFF
@@ -128,7 +128,9 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
             </label>
 
             <span
-              className={` left-1 peer-checked:left-9 transition-all duration-300 ease-in-out w-4 h-4  ${
+              className={` ${
+                status ? "left-9" : " left-1"
+              } transition-all duration-300 ease-in-out w-4 h-4  ${
                 status ? color : "bg-white"
               }  absolute   top-[50%] translate-y-[-50%] rounded-full`}
             ></span>
