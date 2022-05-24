@@ -40,7 +40,7 @@ int mq2Pin = 35; // Smoke Detector Analog Pin
 const char *controllerTopic = "dia-room/";
 const char *command = "/command";
 const char *status = "/status";
-const char *sensors[5] = {"mainLight", "door", "tv", "airCondition", "fanPower"};
+const char *sensors[5] = {"mainLight", "door", "secondaryLight", "airCondition", "fanPower"};
 const int pinNumbers[5] = {mainLightPin, doorPin, secondaryLight, airConditionPin, fanPowerPin};
 int sensorArrSize = sizeof(sensors) / sizeof(sensors[0]);
 

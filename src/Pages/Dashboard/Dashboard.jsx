@@ -23,7 +23,7 @@ export default function DashboardCopy2() {
   const [mainLightStatus, setMainLightStatus] = useState(false);
   const [fanPowerStatus, setFanPowertatus] = useState(false);
   const [doorStatus, setDoorStatus] = useState(false);
-  const [tvStatus, setTvStatus] = useState(false);
+  const [secondaryLightStatus, setSecondaryLightStatus] = useState(false);
   const [airConditionStatus, setAirConditionStatus] = useState(false);
   const [client, setClient] = useState(null);
 
@@ -48,7 +48,7 @@ export default function DashboardCopy2() {
       client.subscribe("dia-room/mainLight/status");
       client.subscribe("dia-room/door/status");
       client.subscribe("dia-room/door/command");
-      client.subscribe("dia-room/tv/status");
+      client.subscribe("dia-room/secondaryLight/status");
       client.subscribe("dia-room/fanPower/status");
       client.subscribe("dia-room/airCondition/status");
       setClient(client);
@@ -89,11 +89,11 @@ export default function DashboardCopy2() {
           setDoorStatus(false);
         }
       }
-      if (topic === "dia-room/tv/status") {
+      if (topic === "dia-room/secondaryLight/status") {
         if (payload.toString().includes("on")) {
-          setTvStatus(true);
+          setSecondaryLightStatus(true);
         } else {
-          setTvStatus(false);
+          setSecondaryLightStatus(false);
         }
       }
       if (topic === "dia-room/fanPower/status") {
@@ -126,7 +126,7 @@ export default function DashboardCopy2() {
       <div className="flex md:flex-row flex-col md:items-center md:justify-between relative">
         <div className="flex  md:items-center  flex-col space-y-2 pt-2 md:pt-0 md:space-y-0 md:flex-row">
           <span className="font-bold bg-blue-500/30 px-3 mr-2 py-1 rounded">
-            My kitchen office big room in the back yard
+            Dia room
           </span>
           <div className="w-fit">
             <ConnectionCard
@@ -154,7 +154,7 @@ export default function DashboardCopy2() {
       <div className=" grid grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-2  ">
         <SensorOutputButton
           sensor={{
-            name: "Room Light",
+            name: "Main Light",
             type: "bulb",
             controller: "dia-room",
             topic: "mainLight/command",
@@ -165,11 +165,11 @@ export default function DashboardCopy2() {
         />
         <SensorOutputButton
           sensor={{
-            name: "Room TV",
-            type: "tv",
+            name: "Secondary Light",
+            type: "bulb",
             controller: "dia-room",
-            topic: "tv/command",
-            status: tvStatus,
+            topic: "secondaryLight/command",
+            status: secondaryLightStatus,
           }}
           variant
           client={client}
