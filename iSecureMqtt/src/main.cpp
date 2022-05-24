@@ -35,7 +35,12 @@ int tvPin = 32;
 int airConditionPin = 33;
 int mq2Pin = 35;
 
-
+const char *controllerTopic = "dia-room/";
+const char *command = "/command";
+const char *status = "/status";
+const char *sensors[5] = {"mainLight", "door", "tv", "airCondition", "fanPower"};
+const int pinNumbers[5] = {mainLightPin, doorPin, tvPin, airConditionPin, fanPowerPin};
+int sensorArrSize = sizeof(sensors) / sizeof(sensors[0]);
 
 bool getTemperature()
 {
@@ -105,9 +110,8 @@ void getGasLevel()
   mqttClient.publish("dia-room/gas/status", 2, false, String(mq2DigitalPinValue).c_str());
 }
 
-
-
-void getReadings(){
+void getReadings()
+{
   getTemperature();
   getGasLevel();
 }
@@ -148,11 +152,15 @@ void onMqttConnect(bool sessionPresent)
   Serial.print("Session present: ");
   Serial.println(sessionPresent);
   uint16_t packetIdSub = mqttClient.subscribe("dia-room", 2);
-  mqttClient.subscribe("dia-room/mainLight/command", 1);
-  mqttClient.subscribe("dia-room/door/command", 1);
-  mqttClient.subscribe("dia-room/tv/command", 1);
-  mqttClient.subscribe("dia-room/airCondition/command", 1);
-  mqttClient.subscribe("dia-room/fanPower/command", 1);
+
+  for (int i = 0; i < sensorArrSize; i++)
+  {
+    char subscribeTopics[100];
+    strcpy(subscribeTopics, controllerTopic); // copy string one into the result.
+    strcat(subscribeTopics, sensors[i]);      // append string two to the result.
+    strcat(subscribeTopics, command);
+    mqttClient.subscribe(subscribeTopics, 1);
+  }
 
   Serial.print("Subscribing at QoS 2, packetId: ");
   Serial.println(packetIdSub);
@@ -165,7 +173,7 @@ void onMqttConnect(bool sessionPresent)
 
   Serial.print("Publishing at QoS 2, packetId: ");
   Serial.println(packetIdPub2);
-  publisherTicker.attach(2,getReadings);
+  publisherTicker.attach(2, getReadings);
 }
 
 void onMqttDisconnect(AsyncMqttClientDisconnectReason reason)
@@ -211,89 +219,34 @@ void onMqttMessage(char *topic, char *payload, AsyncMqttClientMessageProperties 
   Serial.print("  payload: ");
   Serial.println(payload);
 
-  if (strcmp(topic, "dia-room/mainLight/command") == 0)
+  for (int i = 0; i < sensorArrSize; i++) // Loop through all sensor pins
   {
-    if (strcmp(payload, "on") == 0)
-    {
-      digitalWrite(mainLightPin, HIGH);
-      mqttClient.publish("dia-room/mainLight/status", 2, true, "on");
-    }
-    else
-    {
-      digitalWrite(mainLightPin, LOW);
-      mqttClient.publish("dia-room/mainLight/status", 2, true, "off");
-    }
-  }
+    char commandResult[100]; // Array to hold the command result
 
-  if (strcmp(topic, "dia-room/door/command") == 0)
-  {
-    if (strcmp(payload, "on") == 0)
-    {
-      digitalWrite(doorPin, HIGH);
-      mqttClient.publish("dia-room/door/status", 2, true, "on");
-    }
-    else
-    {
-      digitalWrite(doorPin, LOW);
-      mqttClient.publish("dia-room/door/status", 2, true, "off");
-    }
-  }
+    strcpy(commandResult, controllerTopic); // copy string one into the result.
+    strcat(commandResult, sensors[i]);      // append string two to the result.
+    strcat(commandResult, command);         // append string two to the result.
 
-  if (strcmp(topic, "dia-room/tv/command") == 0)
-  {
-    if (strcmp(payload, "on") == 0)
+    if (strcmp(topic, commandResult) == 0)
     {
-      digitalWrite(tvPin, HIGH);
-      mqttClient.publish("dia-room/tv/status", 2, true, "on");
-    }
-    else
-    {
-      digitalWrite(tvPin, LOW);
-      mqttClient.publish("dia-room/tv/status", 2, true, "off");
-    }
-  }
+      char statusResult[100];                // Array to hold the Status result
+      strcpy(statusResult, controllerTopic); // copy string one into the result.
+      strcat(statusResult, sensors[i]);      // append string two to the result.
+      strcat(statusResult, status);          // append string two to the result.
 
-  if (strcmp(topic, "dia-room/fanPower/command") == 0)
-  {
-    if (strcmp(payload, "on") == 0)
-    {
-      digitalWrite(fanPowerPin, HIGH);
-      mqttClient.publish("dia-room/fanPower/status", 2, true, "on");
-    }
-    else
-    {
-      digitalWrite(fanPowerPin, LOW);
-      mqttClient.publish("dia-room/fanPower/status", 2, true, "off");
-    }
-  }
-
-  if (strcmp(topic, "dia-room/airCondition/command") == 0)
-  {
-    if (strcmp(payload, "on") == 0)
-    {
-      digitalWrite(airConditionPin, HIGH);
-      mqttClient.publish("dia-room/airCondition/status", 2, true, "on");
-    }
-    else
-    {
-      digitalWrite(airConditionPin, LOW);
-      mqttClient.publish("dia-room/airCondition/status", 2, true, "off");
+      if (strcmp(payload, "on") == 0) // compare the payload if it is equals to the on/off
+      {
+        digitalWrite(pinNumbers[i], HIGH);               // turn on the pin
+        mqttClient.publish(statusResult, 2, true, "on"); // publish the status
+      }
+      else
+      {
+        digitalWrite(pinNumbers[i], LOW);                 // turn off the pin
+        mqttClient.publish(statusResult, 2, true, "off"); // publish the status
+      }
     }
   }
 }
-
-// if ((String)topic == "dia-room/mainLight/value" && (String)payload == "on")
-// {
-//   digitalWrite(mainLightPin, HIGH);
-//   mqttClient.publish("dia-room/mainLight/value", 3, true, "on");
-//   Serial.println("Turning on main light");
-// }
-// else if ((String)topic == "dia-room/mainLight/value" && (String)payload == "off")
-// {
-//   digitalWrite(mainLightPin, LOW);
-//   mqttClient.publish("dia-room/mainLight/value", 3, true, "off");
-//   Serial.println("Turning off main light");
-// }
 
 void setup()
 {
@@ -355,11 +308,7 @@ void setup()
   ArduinoOTA.begin();
 }
 
-
 void loop()
 {
   ArduinoOTA.handle();
-  
-
- 
 }
