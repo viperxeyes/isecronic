@@ -2,6 +2,8 @@
 This example uses FreeRTOS softwaretimers as there is no built-in Ticker library
 */
 
+// KArrem Joined the Team
+
 #include <WiFi.h>
 extern "C"
 {
@@ -26,20 +28,20 @@ DHTesp dht;
 ComfortState cf;
 Ticker publisherTicker;
 
-int fanPowerPin = 14;
-int mq2DigitalPin = 16;
-int dhtPin = 17;
-int mainLightPin = 25;
-int doorPin = 26;
-int tvPin = 32;
+int fanPowerPin = 14;    // Fan Pin
+int mq2DigitalPin = 16;  // Smoke Detector Digital Pin
+int dhtPin = 17;         // Temperature Sensor Pin
+int mainLightPin = 25;   // main Light Pin
+int doorPin = 26;        // Door Lock Pin
+int secondaryLight = 32; // Secondary Light Pin
 int airConditionPin = 33;
-int mq2Pin = 35;
+int mq2Pin = 35; // Smoke Detector Analog Pin
 
 const char *controllerTopic = "dia-room/";
 const char *command = "/command";
 const char *status = "/status";
 const char *sensors[5] = {"mainLight", "door", "tv", "airCondition", "fanPower"};
-const int pinNumbers[5] = {mainLightPin, doorPin, tvPin, airConditionPin, fanPowerPin};
+const int pinNumbers[5] = {mainLightPin, doorPin, secondaryLight, airConditionPin, fanPowerPin};
 int sensorArrSize = sizeof(sensors) / sizeof(sensors[0]);
 
 bool getTemperature()
@@ -56,7 +58,7 @@ bool getTemperature()
 
   float heatIndex = dht.computeHeatIndex(newValues.temperature, newValues.humidity);
   float dewPoint = dht.computeDewPoint(newValues.temperature, newValues.humidity);
-  // float cr = dht.getComfortRatio(cf, newValues.temperature, newValues.humidity);
+  //  float cr = dht.getComfortRatio(cf, newValues.temperature, newValues.humidity);
 
   String comfortStatus;
   switch (cf)
@@ -253,7 +255,7 @@ void setup()
   pinMode(mainLightPin, OUTPUT);
   pinMode(doorPin, OUTPUT);
   pinMode(fanPowerPin, OUTPUT);
-  pinMode(tvPin, OUTPUT);
+  pinMode(secondaryLight, OUTPUT);
   pinMode(airConditionPin, OUTPUT);
 
   pinMode(mq2DigitalPin, INPUT_PULLUP);
