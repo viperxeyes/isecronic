@@ -2,7 +2,7 @@ import { DashboardProvider } from "contexts/DashboardContext";
 import { GlobalProvider } from "contexts/GlobalContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import AppContainer from "./components/layout/AppContainer";
+import AppContainer from "layout/AppContainer";
 // import Login from "./Pages/Login/Login";
 
 function App() {

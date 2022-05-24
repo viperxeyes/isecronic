@@ -12,7 +12,7 @@
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply [border:1px_solid_#1e293b]   bg-[#efefef] rounded-lg;
+    @apply [border:1px_solid_#1e293b]   bg-secondary rounded-lg;
   }
   
   /* Handle on hover */

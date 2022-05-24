@@ -8,7 +8,7 @@ import {
 const GasCard = ({ gasValue, gasDetected }) => {
   return (
     <div
-      className={`flex items-center justify-between bg-slate-800 w-fit  px-5 py-2 rounded-lg space-x-2 shadow-lg`}
+      className={`flex items-center justify-between bg-slate-800 w-48  px-2 rounded-lg space-x-2 shadow-lg`}
     >
       <img
         alt={"gas icon"}

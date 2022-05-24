@@ -122,38 +122,36 @@ export default function DashboardCopy2() {
 
   //Interface Start
   return (
-    <div className="flex  flex-1 flex-col space-y-5    ">
-      <div className="flex flex-col space-y-5">
-        <div className="flex items-center justify-between">
-          <div className="flex space-x-2 items-center">
-            <span className="font-bold bg-blue-500/30 px-3 py-1 rounded">
-              Dia Room
-            </span>
-            <div className="flex w-fit flex-row space-x-5">
-              <ConnectionCard
-                title={"Controller"}
-                connectionStatus={controllerStatus}
-              />
-            </div>
-          </div>
-          <div className="flex items-center">
-            <TemperatureCard
-              temperatureValue={temperatureValue}
-              comfortLevel={comfortLevel}
+    <div className="flex  flex-1 flex-col space-y-5  overflow-y-scroll   ">
+      <div className="flex md:flex-row flex-col md:items-center md:justify-between relative">
+        <div className="flex  md:items-center  flex-col space-y-2 pt-2 md:pt-0 md:space-y-0 md:flex-row">
+          <span className="font-bold bg-blue-500/30 px-3 mr-2 py-1 rounded">
+            My kitchen office big room in the back yard
+          </span>
+          <div className="w-fit">
+            <ConnectionCard
+              title={"Controller"}
+              connectionStatus={controllerStatus}
             />
-            <HumidityCard humidityValue={humidityValue} />
-            <ComfortCard comfortLevel={comfortLevel} />
           </div>
         </div>
+        <div className="flex items-center absolute md:static bottom-0 right-1">
+          <TemperatureCard
+            temperatureValue={temperatureValue}
+            comfortLevel={comfortLevel}
+          />
+          <HumidityCard humidityValue={humidityValue} />
+          <ComfortCard comfortLevel={comfortLevel} />
+        </div>
       </div>
-      <div className=" grid grid-cols-4 gap-y-9 overflow-y-scroll ">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-2 ">
         <GasCard gasValue={gasValue} gasDetected={gasDetected} />
         <MotionCard motionDetected={false} />
         <WindowCard windowOpen={false} />
         <AlarmCard alarmDetected={false} />
       </div>
 
-      <div className=" grid grid-cols-4 gap-y-9 overflow-y-scroll ">
+      <div className=" grid grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-2  ">
         <SensorOutputButton
           sensor={{
             name: "Room Light",
