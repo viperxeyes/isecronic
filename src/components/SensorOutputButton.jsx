@@ -93,7 +93,7 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
     <button
       className={`  ${color} px-5 flex flex-col justify-between rounded-lg ${
         variant ? " h-28" : " h-24"
-      }   py-4 w-48 text-white`}
+      }   py-4 w-full text-white`}
       onClick={() => {
         status
           ? client.publish(`${sensor.controller}/${sensor.topic}`, "off")
@@ -137,7 +137,9 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
           </div>
         </div>
       </div>
-      <span className="text-xl font-bold">{sensor.name}</span>
+      <span className="[font-size:clamp(10px,4vw,16px)]  font-bold">
+        {sensor.name}
+      </span>
     </button>
   );
 };

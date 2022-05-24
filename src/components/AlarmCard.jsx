@@ -4,7 +4,7 @@ import { FaExclamationTriangle, FaCheckCircle } from "react-icons/fa";
 const AlarmCard = ({ alarmDetected }) => {
   return (
     <div
-      className={`flex items-center justify-between bg-slate-800 w-48  px-2 rounded-lg space-x-2 shadow-lg`}
+      className={`grid grid-cols-[1fr_2fr_1fr] items-center w-full    px-10 bg-slate-800   md:px-2   rounded-lg  shadow-lg`}
     >
       <img
         alt={"gas icon"}

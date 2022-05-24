@@ -135,7 +135,7 @@ export default function DashboardCopy2() {
             />
           </div>
         </div>
-        <div className="flex items-center absolute md:static bottom-0 right-1">
+        <div className="flex items-center  md:static ">
           <TemperatureCard
             temperatureValue={temperatureValue}
             comfortLevel={comfortLevel}
@@ -144,7 +144,7 @@ export default function DashboardCopy2() {
           <ComfortCard comfortLevel={comfortLevel} />
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-2 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-2 ">
         <GasCard gasValue={gasValue} gasDetected={gasDetected} />
         <MotionCard motionDetected={false} />
         <WindowCard windowOpen={false} />

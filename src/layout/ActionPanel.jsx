@@ -19,7 +19,7 @@ export default function ActionPanel() {
   return (
     <div className="bg-gray-900 w-full  dark:text-slate-300  flex flex-col overflow-y-auto  items-center ">
       <div className="   shadow-xl relative   bg-slate-800/20 w-full flex-1  items-center  rounded-tl-2xl">
-        <div className=" grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-2 xl:grid-cols-2 xl:place-items-center xl:w-fit self-center mx-auto xl:my-5">
+        <div className=" grid grid-cols-2 md:grid-cols-4 gap-x-2 lg:grid-cols-2 gap-y-2  xl:place-items-center xl:w-fit self-center mx-auto xl:my-5">
           {sensors.map((sensor) => (
             <SensorOutputButton key={sensor.id} sensor={sensor} />
           ))}
