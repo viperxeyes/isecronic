@@ -3,7 +3,7 @@
 @tailwind utilities;
 @import "./icons/webfonts/faall.min.css";
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 2px;
   }
   .react-sweet-progress-symbol {
     color: aqua !important;
@@ -12,7 +12,7 @@
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply [border:1px_solid_#1e293b]   bg-secondary rounded-lg;
+    @apply   bg-transparent 
   }
   
   /* Handle on hover */
