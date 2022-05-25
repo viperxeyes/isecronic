@@ -37,7 +37,7 @@ export default function AppContainer() {
         <div className="[flex:0.125] flex  ">
           <Sidebar items={items} />
         </div>
-        <div className="lg:flex lg:flex-row  flex flex-col overflow-y-scroll">
+        <div className="lg:flex lg:flex-row  flex flex-col overflow-y-scroll pr-2">
           <div className="[flex:0.25]  order-2 lg:order-1 ">
             <div className="justify-between h-full flex flex-col pt-5 lg:pt-0 ">
               <ControlPanel />
