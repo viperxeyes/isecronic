@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import routes from "routes";
 import { Routes, Route } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+
 import { ClipLoader } from "react-spinners";
 const MainContent = () => {
   const loading = () => {

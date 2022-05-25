@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import mqtt from "mqtt";
 
 import TemperatureCard from "components/TemperatureCard";
-import GasCard from "components/GasCard";
+
 import HumidityCard from "components/HumidityCard";
 import ConnectionCard from "components/ConnectionCard";
 import ComfortCard from "components/ComfortCard";
 
 import SensorOutputButton from "components/SensorOutputButton";
-import MotionCard from "components/MotionCard";
-import WindowCard from "components/WindowCard";
-import AlarmCard from "components/AlarmCard";
+
+import SensorInputCard from "components/SensorInputCard";
 export default function DashboardCopy2() {
   // const [messages, setMessages] = useState([]);
 
@@ -125,7 +124,7 @@ export default function DashboardCopy2() {
     <div className="flex  flex-1 flex-col space-y-5  overflow-y-scroll   ">
       <div className="flex md:flex-row flex-col md:items-center md:justify-between relative">
         <div className="flex  md:items-center  flex-col space-y-2 pt-2 md:pt-0 md:space-y-0 md:flex-row">
-          <span className="font-bold bg-blue-500/30 px-3 mr-2 py-1 rounded">
+          <span className="font-bold text-center bg-blue-500/30 px-3 mr-2 py-1 rounded">
             Dia room
           </span>
           <div className="w-fit">
@@ -144,17 +143,21 @@ export default function DashboardCopy2() {
           <ComfortCard comfortLevel={comfortLevel} />
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-2 ">
-        <GasCard gasValue={gasValue} gasDetected={gasDetected} />
-        <MotionCard motionDetected={false} />
-        <WindowCard windowOpen={false} />
-        <AlarmCard alarmDetected={false} />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-2 ">
+        <SensorInputCard
+          analogValue={gasValue}
+          isTriggered={gasDetected}
+          variant="gas"
+        />
+        <SensorInputCard isTriggered={false} variant="motion" />
+        <SensorInputCard isTriggered={false} variant="window" />
+        <SensorInputCard isTriggered={false} variant="alarm" />
       </div>
 
       <div className=" grid grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-2  ">
         <SensorOutputButton
           sensor={{
-            name: "Main Light",
+            name: "Main",
             type: "bulb",
             controller: "dia-room",
             topic: "mainLight/command",
@@ -165,7 +168,7 @@ export default function DashboardCopy2() {
         />
         <SensorOutputButton
           sensor={{
-            name: "Secondary Light",
+            name: "Secondary",
             type: "bulb",
             controller: "dia-room",
             topic: "secondaryLight/command",

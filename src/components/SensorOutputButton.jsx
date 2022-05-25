@@ -91,7 +91,7 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
   }, [getColorBasedOnType]);
   return (
     <button
-      className={`  ${color} px-5 flex flex-col justify-between rounded-lg ${
+      className={`  ${color} px-3  flex flex-col justify-between rounded-lg ${
         variant ? " h-28" : " h-24"
       }   py-4 w-full text-white`}
       onClick={() => {
@@ -137,7 +137,7 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
           </div>
         </div>
       </div>
-      <span className="[font-size:clamp(10px,4vw,16px)]  font-bold">
+      <span className="text-[15px]  whitespace-nowrap  font-bold">
         {sensor.name}
       </span>
     </button>

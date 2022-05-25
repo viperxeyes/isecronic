@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  FaExclamationTriangle,
-  FaCheckCircle,
-  FaExclamationCircle,
-} from "react-icons/fa";
+import { FaExclamationTriangle, FaCheckCircle } from "react-icons/fa";
 
 const MotionCard = ({ motionDetected }) => {
   return (

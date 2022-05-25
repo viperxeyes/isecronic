@@ -142,7 +142,7 @@ const WeatherContent = () => {
 
   const [outdoorWeather, setOutdoorWeather] = useState(weather);
   return (
-    <div className="bg-slate-800/40 px-3 py-1 rounded-xl grid grid-cols-1 lg:grid-cols-2 grid-rows-1 gap-x-1 md:gap-y-2">
+    <div className="bg-slate-800/40 px-3 py-1 rounded-xl grid grid-cols-1 md:grid-cols-2 grid-rows-1 gap-x-1 md:gap-y-2">
       <div className="space-y-3">
         <h1 className="text-3xl "> Hi ,Dia !</h1>
         <p className="text-sm text-blue-300/70">
@@ -165,7 +165,7 @@ const WeatherContent = () => {
         </div>
       </div>
 
-      <div className="w-full flex    px-5 border-t lg:border-l lg:border-t-0 border-slate-400/20 ">
+      <div className="w-full flex    px-5 border-t md:border-l md:border-t-0 border-slate-400/20 ">
         <div className="flex justify-between w-full ">
           <div className="flex flex-col justify-evenly ">
             <span className=" text-3xl font-bold ">

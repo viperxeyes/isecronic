@@ -16,21 +16,6 @@ const GasCard = ({ gasValue, gasDetected }) => {
         className={`w-[32px] h-[32px] ${gasDetected && "animate-bounce"} `}
       />
       <div className="flex flex-col">
-        <span
-          className={`text-sm font-bold ${
-            gasValue <= 350
-              ? "text-green-500"
-              : gasValue > 300 && gasValue < 800
-              ? "text-yellow-500"
-              : "text-red-500"
-          }`}
-        >
-          {gasValue <= 350
-            ? "Normal"
-            : gasValue > 300 && gasValue < 800
-            ? "Warning"
-            : "Danger"}
-        </span>
         <span className="text-sm font-bold">
           Gas Level&nbsp;
           {gasValue.length === 1 ? (
@@ -45,6 +30,21 @@ const GasCard = ({ gasValue, gasDetected }) => {
           ) : (
             gasValue
           )}
+        </span>
+        <span
+          className={`text-sm font-bold ${
+            gasValue <= 350
+              ? "text-green-500"
+              : gasValue > 300 && gasValue < 800
+              ? "text-yellow-500"
+              : "text-red-500"
+          }`}
+        >
+          {gasValue <= 350
+            ? "Normal"
+            : gasValue > 300 && gasValue < 800
+            ? "Warning"
+            : "Danger"}
         </span>
       </div>
       {gasValue <= 350 ? (

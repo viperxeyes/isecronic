@@ -2,7 +2,7 @@ import React from "react";
 import { FaCircle, FaDotCircle } from "react-icons/fa";
 const ConnectionCard = ({ title, connectionStatus }) => {
   return (
-    <div className="flex items-center bg-slate-800 w-full   px-5 py-2 rounded-lg space-x-2">
+    <div className="flex items-center bg-slate-800 w-full   px-2 py-2 rounded-lg space-x-2">
       {connectionStatus === "online" ? (
         <FaCircle className="w-[16px] h-[16px] text-green-500" />
       ) : (
