@@ -16,7 +16,11 @@ const ActionPanel = React.lazy(() => import("./ActionPanel"));
 
 export default function AppContainer() {
   const loading = () => {
-    return <ClipLoader loading color="#3c88fa" />;
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <ClipLoader loading color="#3c88fa" />;
+      </div>
+    );
   };
 
   const items = [
@@ -35,13 +39,13 @@ export default function AppContainer() {
       <Suspense fallback={loading()}>
         <Header />
       </Suspense>
-      <div className="flex space-x-2 lg:space-x-4 flex-1 overflow-hidden">
-        <div className="[flex:0.125] flex  ">
+      <div className="flex  space-x-2 lg:space-x-4 flex-1  overflow-hidden">
+        <div className="flex lg:mr-2  ">
           <Suspense fallback={loading()}>
             <Sidebar items={items} />
           </Suspense>
         </div>
-        <div className="lg:flex lg:flex-row  flex flex-col overflow-y-scroll pr-2">
+        <div className="lg:flex lg:flex-row  flex flex-col overflow-y-scroll pr-2 flex-1 ">
           <div className="[flex:0.25]  order-2 lg:order-1 ">
             <div className="justify-between h-full flex flex-col pt-5 lg:pt-0 ">
               <Suspense fallback={loading()}>
@@ -52,13 +56,12 @@ export default function AppContainer() {
               </Suspense>
             </div>
           </div>
-          <div className="flex-1  flex flex-col pb-2 lg:ml-6 lg:mr-4 order-1 lg:order-2">
+          <div className="flex-1   flex flex-col pb-2 lg:ml-6 lg:mr-4 order-1 lg:order-2">
             <Suspense fallback={loading()}>
-              <WeatherContent />
               <MainContent />
             </Suspense>
           </div>
-          <div className="[flex:0.5] flex order-3 lg:order-3 pt-5 lg:pt-0  ">
+          <div className="[flex:0.5] shrink-0  flex order-3 lg:order-3 lg:w-1/3 pt-5 lg:pt-0   ">
             <Suspense fallback={loading()}>
               <ActionPanel />
             </Suspense>

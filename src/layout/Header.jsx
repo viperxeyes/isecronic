@@ -7,7 +7,7 @@ const Header = () => {
     <div className="flex flex-col  lg:flex lg:flex-row lg:space-x-4 lg:h-32 lg:space-y-0 space-y-2">
       <div className="lg:[flex:0.125] ">
         <div className="flex justify-start space-x-3 px-2 lg:px-0 py-1   lg:flex-row   items-center lg:w-28 lg:items-center lg:justify-center  lg:h-full">
-          <img src="logo1.png" alt="logo" className="w-20 lg:w-full " />
+          <img src="/logo.png" alt="isecronic" className="w-20 lg:w-full " />
           <span className="[font-size:clamp(32px,5vw,40px)] lg:hidden">
             iSecronic
           </span>

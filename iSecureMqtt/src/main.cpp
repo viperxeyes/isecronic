@@ -21,6 +21,8 @@ extern "C"
 #define MQTT_HOST IPAddress(192, 168, 1, 130)
 #define MQTT_PORT 1883
 
+const char *ESP_Hostname = "dia-room-controller";
+
 AsyncMqttClient mqttClient;
 TimerHandle_t mqttReconnectTimer;
 TimerHandle_t wifiReconnectTimer;
@@ -119,6 +121,7 @@ void getReadings()
 }
 void connectToWifi()
 {
+  WiFi.hostname(ESP_Hostname);
   Serial.println("Connecting to Wi-Fi...");
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 }

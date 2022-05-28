@@ -10,6 +10,7 @@ import ComfortCard from "components/ComfortCard";
 import SensorOutputButton from "components/SensorOutputButton";
 
 import SensorInputCard from "components/SensorInputCard";
+import WeatherContent from "components/WeatherContent";
 export default function DashboardCopy2() {
   // const [messages, setMessages] = useState([]);
 
@@ -36,6 +37,8 @@ export default function DashboardCopy2() {
           : process.env.REACT_APP_DEVELOPMENT_ADDRESS,
       port: 9883,
       protocol: "wss",
+
+      wsOptions: { perMessageDeflate: false },
     });
     client.on("connect", () => {
       client.subscribe("dia-room/controller/status");
@@ -122,6 +125,7 @@ export default function DashboardCopy2() {
   //Interface Start
   return (
     <div className="flex  flex-1 flex-col space-y-5  overflow-y-scroll   ">
+      <WeatherContent />
       <div className="flex md:flex-row flex-col md:items-center md:justify-between relative">
         <div className="flex  md:items-center  flex-col space-y-2 pt-2 md:pt-0 md:space-y-0 md:flex-row">
           <span className="font-bold text-center bg-blue-500/30 px-3 mr-2 py-1 rounded">

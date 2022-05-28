@@ -55,13 +55,13 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
     }
     if (sensor.type.toLowerCase() === "valve") {
       return (
-        <img src="assets/images/valve.png" alt="valve" className={`${size}`} />
+        <img src="/assets/images/valve.png" alt="valve" className={`${size}`} />
       );
     }
     if (sensor.type.toLowerCase() === "air_condition") {
       return (
         <img
-          src="assets/images/air_condition.png"
+          src="/assets/images/air_condition.png"
           alt="air condition"
           className={`${size}`}
         />
@@ -70,7 +70,7 @@ const SensorOutputButton = ({ sensor, variant, client }) => {
     if (sensor.type.toLowerCase() === "fan") {
       return (
         <img
-          src="assets/images/fan.png"
+          src="/assets/images/fan.png"
           alt="fan"
           className={`${size}  ${status && "animate-spin "}`}
         />

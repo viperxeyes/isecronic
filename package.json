@@ -9,6 +9,7 @@
     "buffer": "^6.0.3",
     "chart.js": "^3.7.1",
     "chartjs-plugin-datalabels": "^2.0.0",
+    "formik": "^2.2.9",
     "mqtt": "^4.3.7",
     "mqtt-react-hooks": "^2.0.3",
     "paho-mqtt": "^1.1.0",
