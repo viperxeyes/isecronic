@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import mqtt from "mqtt";
+import * as mqtt from "paho-mqtt";
 
 import TemperatureCard from "components/TemperatureCard";
 
@@ -29,94 +29,96 @@ export default function DashboardCopy2() {
 
   useEffect(() => {
     // getWeather();
-    const client = mqtt.connect({
-      keepalive: 5,
-      hostname:
-        process.env.NODE_ENV === "production"
-          ? process.env.REACT_APP_PRODUCTION_ADDRESS
-          : process.env.REACT_APP_DEVELOPMENT_ADDRESS,
-      port: 9883,
-      protocol: "wss",
+    const client = new mqtt.Client(
+      process.env.NODE_ENV === "production"
+        ? process.env.REACT_APP_PRODUCTION_ADDRESS
+        : process.env.REACT_APP_DEVELOPMENT_ADDRESS,
+      9883,
+      "/"
+    );
 
-      wsOptions: { perMessageDeflate: false },
-    });
-    client.on("connect", () => {
-      client.subscribe("dia-room/controller/status");
-      client.subscribe("dia-room/gas/value");
-      client.subscribe("dia-room/gas/status");
-      client.subscribe("dia-room/temperature/value");
-      client.subscribe("dia-room/humidity/value");
-      client.subscribe("dia-room/comfort/value");
-      client.subscribe("dia-room/mainLight/status");
-      client.subscribe("dia-room/door/status");
-      client.subscribe("dia-room/door/command");
-      client.subscribe("dia-room/secondaryLight/status");
-      client.subscribe("dia-room/fanPower/status");
-      client.subscribe("dia-room/airCondition/status");
-      setClient(client);
-    });
+    client.connect({
+      useSSL: true,
+      keepAliveInterval: 5,
 
-    client.on("message", (topic, payload, packet) => {
+      onSuccess: () => {
+        console.log("connected");
+        client.subscribe("dia-room/controller/status");
+        client.subscribe("dia-room/gas/value");
+        client.subscribe("dia-room/gas/status");
+        client.subscribe("dia-room/temperature/value");
+        client.subscribe("dia-room/humidity/value");
+        client.subscribe("dia-room/comfort/value");
+        client.subscribe("dia-room/mainLight/status");
+        client.subscribe("dia-room/door/status");
+        client.subscribe("dia-room/door/command");
+        client.subscribe("dia-room/secondaryLight/status");
+        client.subscribe("dia-room/fanPower/status");
+        client.subscribe("dia-room/airCondition/status");
+        setClient(client);
+      },
+    });
+    client.onMessageArrived = ({ topic, payloadString }) => {
       if (topic === "dia-room/door/command") {
       }
       if (topic === "dia-room/gas/value") {
-        setGasValue(payload.toString());
+        setGasValue(payloadString);
       }
       if (topic === "dia-room/gas/status") {
-        setGasDetected(payload.toString() === "0" ? true : false);
+        setGasDetected(payloadString === "0" ? true : false);
       }
       if (topic === "dia-room/controller/status") {
-        setControllerStatus(payload.toString());
+        setControllerStatus(payloadString);
       }
       if (topic === "dia-room/temperature/value") {
-        setTemperatureValue(payload.toString());
+        setTemperatureValue(payloadString);
       }
       if (topic === "dia-room/humidity/value") {
-        setHumidityValue(payload.toString());
+        setHumidityValue(payloadString);
       }
       if (topic === "dia-room/comfort/value") {
-        setComfortLevel(payload.toString());
+        setComfortLevel(payloadString);
       }
       if (topic === "dia-room/mainLight/status") {
-        if (payload.toString().includes("on")) {
+        if (payloadString.includes("on")) {
           setMainLightStatus(true);
         } else {
           setMainLightStatus(false);
         }
       }
       if (topic === "dia-room/door/status") {
-        if (payload.toString().includes("on")) {
+        if (payloadString.includes("on")) {
           setDoorStatus(true);
         } else {
           setDoorStatus(false);
         }
       }
       if (topic === "dia-room/secondaryLight/status") {
-        if (payload.toString().includes("on")) {
+        if (payloadString.includes("on")) {
           setSecondaryLightStatus(true);
         } else {
           setSecondaryLightStatus(false);
         }
       }
       if (topic === "dia-room/fanPower/status") {
-        if (payload.toString().includes("on")) {
+        if (payloadString.includes("on")) {
           setFanPowertatus(true);
         } else {
           setFanPowertatus(false);
         }
       }
       if (topic === "dia-room/airCondition/status") {
-        if (payload.toString().includes("on")) {
+        if (payloadString.includes("on")) {
           setAirConditionStatus(true);
         } else {
           setAirConditionStatus(false);
         }
       }
-    });
+    };
 
     return () => {
       if (client !== null) {
-        client.end();
+        client.disconnect();
         setClient(null);
       }
     };
